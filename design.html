@@ -1,0 +1,166 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+	<head>
+		<title>Gitblit</title>
+		<link rel="stylesheet" type="text/css" href="./bootstrap.140.css"/>
+		<link rel="stylesheet" type="text/css" href="./bootstrap.gb.css"/>
+		<link rel="stylesheet" type="text/css" href="./markdown.css"/>
+		<link rel="shortcut icon" type="image/png" href="./gitblt-favicon.png" />
+		<meta name="ROBOTS" content="INDEX">
+		<meta http-equiv="imagetoolbar" content="no" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="keywords" content="java git server" />
+		
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+		<script>
+			!window.jQuery && document.write(<script src="./fancybox/jquery-1.4.3.min.js"><\/script>);
+		</script>
+		<script type="text/javascript" src="./fancybox/query.mousewheel-3.0.4.pack.js"></script>
+		<script type="text/javascript" src="./fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+		<link rel="stylesheet" type="text/css" href="./fancybox/jquery.fancybox-1.3.4.css" media="screen" />
+		
+		<script type="text/javascript" src="./screenshots.js"></script>
+		<style>
+			ul.noBullets {
+				list-style: none;
+			}
+		</style>
+		
+		<script type="text/javascript" src="prettify/prettify.js"></script>
+		<link href="prettify/prettify.css" type="text/css" rel="stylesheet" />
+		
+		<!-- Place this tag in your head or just before your close body tag -->
+		<link rel="canonical" href="http://gitblit.com" />
+		<link rel="publisher" href="https://plus.google.com/114464678392593421684" />
+		<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+		
+		<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-24377072-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+	</head>
+	<body style="padding-top:40px;"  onload="prettyPrint()">
+		<div class="topbar">
+			<div class="fill">
+				<div class="container">
+					<a class="brand" href="http://gitblit.com" title="gitblit homepage">
+						<img src="gitblt_25_white.png" width="79" height="25" alt="gitblit" class="logo"/>
+					</a>
+					
+					<ul class="nav">
+						<li><a href='index.html'>overview</a></li><li><a href='features.html'>features</a></li><li><a href='screenshots.html'>screenshots</a></li><li><a href='setup.html'>setup</a></li><li><a href='federation.html'>federation</a></li><li><a href='rpc.html'>rpc</a></li><li><a href='faq.html'>faq</a></li><li><a href='properties.html'>settings</a></li><li class='active'><a href='design.html'>design</a></li><li><a href='releases.html'>releases</a></li><li><a href='roadmap.html'>roadmap</a></		
+						<!-- Google Plus Badge -->
+						<li><a href="https://plus.google.com/114464678392593421684?prsrc=3" style="margin-top:3px;text-decoration: none;"><img src="https://ssl.gstatic.com/images/icons/gplus-16.png" width="16" height="16" style="border: 0;"/></a></li>
+						<!-- Google Plus One -->
+						<li><div style="margin-top:14px;"><g:plusone size="small" href="http://gitblit.com"></g:plusone></div></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="content">
+				<div class="markdown">
+<h2> Design Principles</h2>
+
+<ol>
+<li><a href="http://en.wikipedia.org/wiki/KISS_principle">Keep It Simple, Stupid</a></li>
+<li>Offer useful features for serving Git repositories.  If feature is complex, refer to #1.</li>
+<li>All dependencies must be retrievable from a publicly accessible <a href="http://maven.apache.org">Maven</a> repository.<br/>This is to ensure authenticity of dependencies and to automate the setup of developer environments.</li>
+</ol>
+
+<h2> Architecture</h2>
+
+<p><img src="architecture.png" alt="block diagram" title="Gitblit Architecture"/></p>
+
+<h3> Bundled Dependencies</h3>
+
+<p>The following dependencies are bundled with Gitblit.</p>
+
+<ul>
+<li><a href="http://twitter.github.com/bootstrap">Bootstrap</a> (Apache 2.0)</li>
+<li><a href="https://github.com/mojombo/clippy">Clippy</a> (MIT)</li>
+<li><a href="http://code.google.com/p/google-code-prettify">google-code-prettify</a> (Apache 2.0)</li>
+<li><a href="http://commons.apache.org/daemon">Commons Daemon</a> (Apache 2.0)</li>
+<li>magnifying glass search icon courtesy of <a href="http://gnome.org">Gnome</a> (Creative Commons CC-BY)</li>
+<li>modified Git logo originally designed by <a href="http://henrik.nyh.se/2007/06/alternative-git-logo-and-favicon">Henrik Nyh</a></li>
+<li>other icons courtesy of <a href="http://www.fatcow.com/free-icons">FatCow Hosting</a> (Creative Commons CC-BY)</li>
+</ul>
+
+<h3> Downloaded Dependencies</h3>
+
+<p>The following dependencies are automatically downloaded by Gitblit GO (or already bundled with the WAR) from the Apache Maven repository and from the Eclipse Maven repository when Gitblit is launched for the first time.</p>
+
+<ul>
+<li><a href="http://eclipse.org/jgit" title="Eclipse JGit Site">JGit</a> (EDL 1.0)</li>
+<li><a href="http://wicket.apache.org">Wicket</a> (Apache 2.0)</li>
+<li><a href="https://github.com/wicketstuff/core/wiki/GoogleCharts">WicketStuff GoogleCharts</a> (Apache 2.0)</li>
+<li><a href="http://markdown.tautua.org">MarkdownPapers</a> (Apache 2.0)</li>
+<li><a href="http://eclipse.org/jetty">Jetty</a> (Apache 2.0, EPL 1.0)</li>
+<li><a href="http://www.slf4j.org">SLF4J</a> (MIT/X11)</li>
+<li><a href="http://logging.apache.org/log4j">Log4j</a> (Apache 2.0) </li>
+<li><a href="http://jcommander.org">JCommander</a> (Apache 2.0)</li>
+<li><a href="http://www.bouncycastle.org">BouncyCastle</a> (MIT/X11)</li>
+<li><a href="http://www.jcraft.com/jsch">JSch - Java Secure Channel</a> (BSD)</li>
+<li><a href="http://rome.dev.java.net">Rome</a> (Apache 1.1)</li>
+<li><a href="http://www.jdom.org">jdom</a> (Apache-style JDOM license)</li>
+<li><a href="http://code.google.com/google-gson">google-gson</a> (Apache 2.0)</li>
+<li><a href="http://kenai.com/projects/javamail">javamail</a> (CDDL-1.0, BSD, GPL-2.0, GNU-Classpath)</li>
+<li><a href="http://groovy.codehaus.org">Groovy</a> (Apache 2.0)</li>
+</ul>
+
+<h3> Other Build Dependencies</h3>
+
+<ul>
+<li><a href="http://fancybox.net">Fancybox image viewer</a> (MIT and GPL dual-licensed)</li>
+<li><a href="http://junit.org">JUnit</a> (Common Public License)</li>
+<li><a href="http://commons.apache.org/net">commons-net</a> (Apache 2.0)</li>
+<li><a href="http://code.google.com/p/ant-googlecode">ant-googlecode</a> (New BSD)</li>
+<li><a href="http://genjar.sourceforge.net">GenJar</a> (Apache 1.1)</li>
+</ul>
+
+<h2> Building from Source</h2>
+
+<p><a href="http://eclipse.org">Eclipse</a> is recommended for development as the project settings are preconfigured.</p>
+
+<p>Additionally, <a href="http://code.google.com/javadevtools">Google CodePro AnalytiX</a>, <a href="http://eclipse-cs.sourceforge.net">eclipse-cs</a>, <a href="http://findbugs.sourceforge.net">FindBugs</a>, and <a href="http://www.eclemma.org">EclEmma</a> are recommended development tools.</p>
+
+<ol>
+<li>Clone the git repository from <a href="http://github.com/gitblit" title="gitblit git repository">Github</a>.</li>
+<li>Import the gitblit project into your Eclipse workspace.<br/>
+<em>There will be lots of build errors.</em></li>
+<li>Using Ant, execute the <code>build.xml</code> script in the project root.<br/>
+<em>This will download all necessary build dependencies and will also generate the Keys class for accessing settings.</em></li>
+<li>Select your gitblit project root and <strong>Refresh</strong> the project, this should correct all build problems.</li>
+<li>Using JUnit, execute the <code>com.gitblit.tests.GitBlitSuite</code> test suite.<br/>
+<em>This will clone some repositories from the web and run through the unit tests.</em></li>
+<li>Review the settings in <code>gitblit.properties</code> in your project root.<ul>
+<li>By default, the <em>git.repositoriesFolder</em> points to the repositories cloned by the test suite.</li>
+<li>If running on Linux you may have to change the served port(s) to &gt; 1024 unless you are developing as the root user. </li>
+</ul>
+</li>
+<li>Execute the <em>com.gitblit.Launcher</em> class to start Gitblit.</li>
+</ol>
+
+<h2> Contributing</h2>
+
+<p>Patches welcome in any form.</p>
+
+<p>Contributions must be your own original work and must licensed under the <a href="http://www.apache.org/licenses/LICENSE-2.0" title="Apache License, Version 2.0">Apache License, Version 2.0</a>, the same license used by Gitblit.			</div> <!-- markdown -->
+			<div style="margin-top:10px" class="page_footer">
+				<div style="float:right;">generated 2012-01-11</div>
+			The content of this page is licensed under the <a href="http://creativecommons.org/licenses/by/3.0">Creative Commons Attribution 3.0 License</a>.
+			</div>			
+		</div> <!-- content -->
+	</div> <!-- container -->	
+</body>
+</html>

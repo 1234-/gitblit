@@ -1,0 +1,364 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+	<head>
+		<title>Gitblit</title>
+		<link rel="stylesheet" type="text/css" href="./bootstrap.140.css"/>
+		<link rel="stylesheet" type="text/css" href="./bootstrap.gb.css"/>
+		<link rel="stylesheet" type="text/css" href="./markdown.css"/>
+		<link rel="shortcut icon" type="image/png" href="./gitblt-favicon.png" />
+		<meta name="ROBOTS" content="INDEX">
+		<meta http-equiv="imagetoolbar" content="no" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="keywords" content="java git server" />
+		
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+		<script>
+			!window.jQuery && document.write(<script src="./fancybox/jquery-1.4.3.min.js"><\/script>);
+		</script>
+		<script type="text/javascript" src="./fancybox/query.mousewheel-3.0.4.pack.js"></script>
+		<script type="text/javascript" src="./fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+		<link rel="stylesheet" type="text/css" href="./fancybox/jquery.fancybox-1.3.4.css" media="screen" />
+		
+		<script type="text/javascript" src="./screenshots.js"></script>
+		<style>
+			ul.noBullets {
+				list-style: none;
+			}
+		</style>
+		
+		<script type="text/javascript" src="prettify/prettify.js"></script>
+		<link href="prettify/prettify.css" type="text/css" rel="stylesheet" />
+		
+		<!-- Place this tag in your head or just before your close body tag -->
+		<link rel="canonical" href="http://gitblit.com" />
+		<link rel="publisher" href="https://plus.google.com/114464678392593421684" />
+		<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+		
+		<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-24377072-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+	</head>
+	<body style="padding-top:40px;"  onload="prettyPrint()">
+		<div class="topbar">
+			<div class="fill">
+				<div class="container">
+					<a class="brand" href="http://gitblit.com" title="gitblit homepage">
+						<img src="gitblt_25_white.png" width="79" height="25" alt="gitblit" class="logo"/>
+					</a>
+					
+					<ul class="nav">
+						<li><a href='index.html'>overview</a></li><li><a href='features.html'>features</a></li><li><a href='screenshots.html'>screenshots</a></li><li><a href='setup.html'>setup</a></li><li><a href='federation.html'>federation</a></li><li class='active'><a href='rpc.html'>rpc</a></li><li><a href='faq.html'>faq</a></li><li><a href='properties.html'>settings</a></li><li><a href='design.html'>design</a></li><li><a href='releases.html'>releases</a></li><li><a href='roadmap.html'>roadmap</a></		
+						<!-- Google Plus Badge -->
+						<li><a href="https://plus.google.com/114464678392593421684?prsrc=3" style="margin-top:3px;text-decoration: none;"><img src="https://ssl.gstatic.com/images/icons/gplus-16.png" width="16" height="16" style="border: 0;"/></a></li>
+						<!-- Google Plus One -->
+						<li><div style="margin-top:14px;"><g:plusone size="small" href="http://gitblit.com"></g:plusone></div></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="content">
+				<div class="markdown">
+<h2> Remote Management, Administration and Integration</h2>
+
+<p><em>SINCE 0.7.0</em></p>
+
+<p>Gitblit optionally allows a remote client to administer the Gitblit server.  This client could be a Java-based tool or perhaps a tool written in another language.</p>
+
+<pre><code>web.enableRpcServlet=true
+web.enableRpcManagement=false
+web.enableRpcAdministration=false
+</code></pre>
+
+<p><strong>https</strong> is strongly recommended because passwords are insecurely transmitted form your browser/rpc client using Basic authentication!</p>
+
+<p>The Gitblit JSON RPC mechanism, like the Gitblit JGit servlet, syndication/feed servlet, etc, supports request-based authentication.  Making an <em>admin</em> request will trigger Gitblit's basic authentication mechanism.  Listing of repositories, generally, will not trigger this authentication mechanism unless <em>web.authenticateViewPages=true</em>.  That means its possible to allow anonymous enumeration of repositories that are not <em>view restricted</em> or <em>clone restricted</em>.  Of course, if credentials are provided then all private repositories that are available to the user account will be enumerated in the JSON response.</p>
+
+<h3> Gitblit Manager</h3>
+
+<p><a href="http://code.google.com/p/gitblit/downloads/detail?name=manager-0.8.0.zip">Gitblit Manager</a> is an example Java/Swing application that allows remote management (repository and user objects) and administration (server settings) of a Gitblit server.</p>
+
+<p>This application uses a combination of RSS feeds and the JSON RPC interface, both of which are part of the <a href="http://code.google.com/p/gitblit/downloads/detail?name=gbapi-0.8.0.zip">Gitblit API</a> library, to present live information from a Gitblit server.  Some JSON RPC methods from the utility class <code>com.gitblit.utils.RpcUtils</code> are not currently used by the Gitblit Manager.</p>
+
+<p><strong>NOTE:</strong><br/>
+Gitblit Manager stores your login credentials <strong>INSECURELY</strong> in homedir/.gitblit/config.</p>
+
+<h3> Eclipse/EGit &quot;Import from Gitblit&quot; Feature (Planning)</h3>
+
+<p>One obvious goal of a Gitblit RPC mechanism would be to have an Eclipse/EGit Feature that allows authentication and enumeration of Gitblit repositories from the Eclipse <em>Import...</em> menu.  Batch cloning would be supported and delegated to EGit.</p>
+
+<p>This particular project should not be difficult as the only external dependency for <code>com.gitblit.utils.RpcUtils</code> is <a href="http://google-gson.googlecode.com">google-gson</a> which is already a dependency of the EGit/GitHub Mylyn feature.</p>
+
+<p>One proposal from the EGit team is to define a common JSON RPC method for enumeration of repositories which can be implemented by Git hosts.  The EGit team would then implement the UI and the client-side enumeration code.  This idea was raised as part of this <a href="https://bugs.eclipse.org/bugs/show_bug.cgi?id=361251">feature request for EGit</a>.</p>
+
+<p>Currently this project is in the planning stage.</p>
+
+<h2> RSS Query Interface</h2>
+
+<p>At present, Gitblit does not yet support retrieving Git objects (commits, etc) via the JSON RPC mechanism.  However, the repository/branch RSS feeds can be used to extract log/history information from a repository branch.</p>
+
+<p>The Gitblit API includes methods for retrieving and interpreting RSS feeds.  The Gitblit Manager uses these methods to allow branch activity monitoring and repository searching.</p>
+
+<table>
+<tr><th>url parameter</th><th>default</th><th>description</th></tr>
+<tr><td colspan="3"><b>standard query</b></td></tr>
+<tr><td><em>repository</em></td><td><em>required</em></td><td>repository name is part of the url (see examples below)</td></tr>
+<tr><td>h=</td><td><em>optional</em><br/>default: HEAD</td><td>starting branch, ref, or commit id</td></tr>
+<tr><td>l=</td><td><em>optional</em><br/>default: web.syndicationEntries</td><td>maximum return count</td></tr>
+<tr><td>pg=</td><td><em>optional</em><br/>default: 0</td><td>page number for paging<br/>(offset into history = pagenumber*maximum return count)</td></tr>
+<tr><td colspan="3"><b>search query</b></td></tr>
+<tr><td>s=</td><td><em>required</em></td><td>search string</td></tr>
+<tr><td>st=</td><td><em>optional</em><br/>default: COMMIT</td><td>search type</td></tr>
+</table>
+<h3> Example RSS Queries</h3>
+
+<pre><code>https://localhost:8443/feed/gitblit.git?l=50&amp;h=refs/heads/master
+https://localhost:8443/feed/gitblit.git?l=50&amp;h=refs/heads/master&amp;s=documentation
+https://localhost:8443/feed/gitblit.git?l=50&amp;h=refs/heads/master&amp;s=james&amp;st=author&amp;pg=2
+</code></pre>
+
+<h2> JSON Remote Procedure Call (RPC) Interface</h2>
+
+<h3> RPC Protocol Versions</h3>
+
+<table>
+<tbody>
+<tr><th>Release</th><th>Protocol Version</th></tr>
+<tr><td>Gitblit v0.7.0</td><td>1 (inferred version)</td></tr>
+<tr><td>Gitblit v0.8.0</td><td>2</td></tr>
+</tbody>
+</table>
+<h3> RPC Request and Response Types</h3>
+
+<table>
+<tr><th colspan="2">url parameters</th><th rowspan="2">required<br/>user<br/>permission</th><th rowspan="2">protocol<br/>version</th><th colspan="2">json</th></tr>
+<tr><th>req=</th><th>name=</th><th>post body</th><th>response body</th></tr>
+<tr><td colspan="6"><em>web.enableRpcServlet=true</em></td></tr>
+<tr><td>GET_PROTOCOL</td><td>-</td><td>-</td><td>2</td><td>-</td><td>Integer</td></tr>
+<tr><td>LIST_REPOSITORIES</td><td>-</td><td>-</td><td>1</td><td>-</td><td>Map&lt;String, RepositoryModel&gt;</td></tr>
+<tr><td>LIST_BRANCHES</td><td>-</td><td>-</td><td>1</td><td>-</td><td>Map&lt;String, List&lt;String&gt;&gt;</td></tr>
+<tr><td>LIST_SETTINGS</td><td>-</td><td><em>-</em></td><td>1</td><td>-</td><td>ServerSettings (basic keys)</td></tr>
+<tr><td colspan="6"><em>web.enableRpcManagement=true</em></td></tr>
+<tr><td>CREATE_REPOSITORY</td><td>repository name</td><td><em>admin</em></td><td>1</td><td>RepositoryModel</td><td>-</td></tr>
+<tr><td>EDIT_REPOSITORY</td><td>repository name</td><td><em>admin</em></td><td>1</td><td>RepositoryModel</td><td>-</td></tr>
+<tr><td>DELETE_REPOSITORY</td><td>repository name</td><td><em>admin</em></td><td>1</td><td>-</td><td>-</td></tr>
+<tr><td>LIST_USERS</td><td>-</td><td><em>admin</em></td><td>1</td><td>-</td><td>List&lt;UserModel&gt;</td></tr>
+<tr><td>CREATE_USER</td><td>user name</td><td><em>admin</em></td><td>1</td><td>UserModel</td><td>-</td></tr>
+<tr><td>EDIT_USER</td><td>user name</td><td><em>admin</em></td><td>1</td><td>UserModel</td><td>-</td></tr>
+<tr><td>DELETE_USER</td><td>user name</td><td><em>admin</em></td><td>1</td><td>-</td><td>-</td></tr>
+<tr><td>LIST_TEAMS</td><td>-</td><td><em>admin</em></td><td>2</td><td>-</td><td>List&lt;TeamModel&gt;</td></tr>
+<tr><td>CREATE_TEAM</td><td>team name</td><td><em>admin</em></td><td>2</td><td>TeamModel</td><td>-</td></tr>
+<tr><td>EDIT_TEAM</td><td>team name</td><td><em>admin</em></td><td>2</td><td>TeamModel</td><td>-</td></tr>
+<tr><td>DELETE_TEAM</td><td>team name</td><td><em>admin</em></td><td>2</td><td>-</td><td>-</td></tr>
+<tr><td>LIST_REPOSITORY_MEMBERS</td><td>repository name</td><td><em>admin</em></td><td>1</td><td>-</td><td>List&lt;String&gt;</td></tr>
+<tr><td>SET_REPOSITORY_MEMBERS</td><td>repository name</td><td><em>admin</em></td><td>1</td><td>List&lt;String&gt;</td><td>-</td></tr>
+<tr><td>LIST_REPOSITORY_TEAMS</td><td>repository name</td><td><em>admin</em></td><td>2</td><td>-</td><td>List&lt;String&gt;</td></tr>
+<tr><td>SET_REPOSITORY_TEAMS</td><td>repository name</td><td><em>admin</em></td><td>2</td><td>List&lt;String&gt;</td><td>-</td></tr>
+<tr><td>LIST_SETTINGS</td><td>-</td><td><em>admin</em></td><td>1</td><td>-</td><td>ServerSettings (management keys)</td></tr>
+<tr><td colspan="6"><em>web.enableRpcAdministration=true</em></td></tr>
+<tr><td>LIST_FEDERATION_REGISTRATIONS</td><td>-</td><td><em>admin</em></td><td>1</td><td>-</td><td>List&lt;FederationModel&gt;</td></tr>
+<tr><td>LIST_FEDERATION_RESULTS</td><td>-</td><td><em>admin</em></td><td>1</td><td>-</td><td>List&lt;FederationModel&gt;</td></tr>
+<tr><td>LIST_FEDERATION_PROPOSALS</td><td>-</td><td><em>admin</em></td><td>1</td><td>-</td><td>List&lt;FederationProposal&gt;</td></tr>
+<tr><td>LIST_FEDERATION_SETS</td><td>-</td><td><em>admin</em></td><td>1</td><td>-</td><td>List&lt;FederationSet&gt;</td></tr>
+<tr><td>LIST_SETTINGS</td><td>-</td><td><em>admin</em></td><td>1</td><td>-</td><td>ServerSettings (all keys)</td></tr>
+<tr><td>EDIT_SETTINGS</td><td>-</td><td><em>admin</em></td><td>1</td><td>Map&lt;String, String&gt;</td><td>-</td></tr>
+<tr><td>LIST_STATUS</td><td>-</td><td><em>admin</em></td><td>1</td><td>-</td><td>ServerStatus (see example below)</td></tr>
+</table>
+<h3> RPC/HTTP Response Codes</h3>
+
+<table>
+<tr><th>code</th><th>name</th><th>description</th></tr>
+<tr><td>200</td><td>success</td><td>Gitblit processed the request successfully</td></tr>
+<tr><td>401</td><td>unauthorized</td><td>Gitblit requires user credentials to process the request</td></tr>
+<tr><td>403</td><td>forbidden</td><td>Gitblit can not process the request for the supplied credentials</td></tr>
+<tr><td>405</td><td>method not allowed</td><td>Gitblit has disallowed the processing the specified request</td></tr>
+<tr><td>500</td><td>server error</td><td>Gitblit failed to process the request likely because the input object created a conflict</td></tr>
+<tr><td>501</td><td>unknown request</td><td>Gitblit does not recognize the RPC request type</td></tr>
+</table>
+<h3> Example: LIST_REPOSITORIES</h3>
+
+<p><strong>url</strong>: https://localhost/rpc?req=LIST_REPOSITORIES<br/>
+<strong>response body</strong>: Map&lt;String, RepositoryModel&gt; where the map key is the clone url of the repository
+<pre>
+{
+  "https://localhost/git/libraries/xmlapache.git": {
+    "name": "libraries/xmlapache.git",
+    "description": "apache xmlrpc client and server",
+    "owner": "admin",
+    "lastChange": "2010-01-28T22:12:06Z",
+    "hasCommits": true,
+    "showRemoteBranches": false,
+    "useTickets": false,
+    "useDocs": false,
+    "accessRestriction": "VIEW",
+    "isFrozen": false,
+    "showReadme": false,
+    "federationStrategy": "FEDERATE_THIS",
+    "federationSets": [
+      "libraries"
+    ],
+    "isFederated": false,
+    "skipSizeCalculation": false,
+    "skipSummaryMetrics": false,
+    "size": "102 KB"
+  },
+  "https://localhost/git/libraries/smack.git": {
+    "name": "libraries/smack.git",
+    "description": "smack xmpp client",
+    "owner": "admin",
+    "lastChange": "2009-01-28T18:38:14Z",
+    "hasCommits": true,
+    "showRemoteBranches": false,
+    "useTickets": false,
+    "useDocs": false,
+    "accessRestriction": "VIEW",
+    "isFrozen": false,
+    "showReadme": false,
+    "federationStrategy": "FEDERATE_THIS",
+    "federationSets": [],
+    "isFederated": false,
+    "skipSizeCalculation": false,
+    "skipSummaryMetrics": false,
+    "size": "4.8 MB"
+  }
+}
+</pre></p>
+
+<h3> Example: EDIT_REPOSITORY (rename)</h3>
+
+<p>The original repository name is specified in the <em>name</em> url parameter.  The new name is set within the JSON object.</p>
+
+<p><strong>url</strong>: https://localhost/rpc?req=EDIT_REPOSITORY&amp;name=libraries/xmlapache.git<br/>
+<strong>post body</strong>: RepositoryModel
+<pre>
+{
+    "name": "libraries/xmlapache-renamed.git",
+    "description": "apache xmlrpc client and server",
+    "owner": "admin",
+    "lastChange": "2010-01-28T22:12:06Z",
+    "hasCommits": true,
+    "showRemoteBranches": false,
+    "useTickets": false,
+    "useDocs": false,
+    "accessRestriction": "VIEW",
+    "isFrozen": false,
+    "showReadme": false,
+    "federationStrategy": "FEDERATE_THIS",
+    "federationSets": [
+      "libraries"
+    ],
+    "isFederated": false,
+    "skipSizeCalculation": false,
+    "skipSummaryMetrics": false,
+    "size": "102 KB"
+}
+</pre></p>
+
+<h3> Example: LIST_USERS</h3>
+
+<p><strong>url</strong>: https://localhost/rpc?req=LIST_USERS<br/>
+<strong>response body</strong>: List&lt;UserModel&gt;
+<pre>
+[
+  {
+    "username": "admin",
+    "password": "admin",
+    "canAdmin": true,
+    "excludeFromFederation": true,
+    "repositories": []
+  },
+  {
+    "username": "test",
+    "password": "test",
+    "canAdmin": false,
+    "excludeFromFederation": false,
+    "repositories": [
+      "libraries/xmlapache.git",
+      "libraries/smack.git"
+    ]
+  }
+]
+</pre></p>
+
+<h3> Example: LIST_SETTINGS</h3>
+
+<p><strong>url</strong>: https://localhost/rpc?req=LIST_SETTINGS<br/>
+<strong>response body</strong>: ServerSettings
+<pre>
+{
+  "settings": {
+      "web.siteName": {
+        "name": "web.siteName",
+        "currentValue": "",
+        "defaultValue": "",
+        "description": "Gitblit Web Settings\nIf blank Gitblit is displayed.",
+        "since": "0.5.0",
+        "caseSensitive": false,
+        "restartRequired": false,
+        "spaceDelimited": false
+      },
+      "web.summaryCommitCount": {
+        "name": "web.summaryCommitCount",
+        "currentValue": "16",
+        "defaultValue": "16",
+        "description": "The number of commits to display on the summary page\nValue must exceed 0 else default of 16 is used",
+        "since": "0.5.0",
+        "caseSensitive": false,
+        "restartRequired": false,
+        "spaceDelimited": false
+      }
+  }
+}
+</pre></p>
+
+<h3> Example: LIST_STATUS</h3>
+
+<p><strong>url</strong>: https://localhost/rpc?req=LIST_STATUS<br/>
+<strong>response body</strong>: ServerStatus
+<pre>
+{
+  "bootDate": "2011-10-22T12:13:00Z",
+  "version": "0.7.0-SNAPSHOT",
+  "releaseDate": "PENDING",
+  "isGO": true,
+  "systemProperties": {
+    "file.encoding": "Cp1252",
+    "java.home": "C:\\Program Files\\Java\\jdk1.6.0_26\\jre",
+    "java.io.tmpdir": "C:\\Users\\JAMESM~1\\AppData\\Local\\Temp\\",
+    "java.runtime.name": "Java(TM) SE Runtime Environment",
+    "java.runtime.version": "1.6.0_26-b03",
+    "java.vendor": "Sun Microsystems Inc.",
+    "java.version": "1.6.0_26",
+    "java.vm.info": "mixed mode",
+    "java.vm.name": "Java HotSpot(TM) 64-Bit Server VM",
+    "java.vm.vendor": "Sun Microsystems Inc.",
+    "java.vm.version": "20.1-b02",
+    "os.arch": "amd64",
+    "os.name": "Windows 7",
+    "os.version": "6.1"
+  },
+  "heapAllocated": 128057344,
+  "heapFree": 120399168,
+  "heapSize": 1899560960,
+  "servletContainer": "jetty/7.4.3.v20110701"
+}
+</pre>			</div> <!-- markdown -->
+			<div style="margin-top:10px" class="page_footer">
+				<div style="float:right;">generated 2012-01-11</div>
+			The content of this page is licensed under the <a href="http://creativecommons.org/licenses/by/3.0">Creative Commons Attribution 3.0 License</a>.
+			</div>			
+		</div> <!-- content -->
+	</div> <!-- container -->	
+</body>
+</html>

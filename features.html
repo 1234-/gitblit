@@ -1,0 +1,151 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+	<head>
+		<title>Gitblit</title>
+		<link rel="stylesheet" type="text/css" href="./bootstrap.140.css"/>
+		<link rel="stylesheet" type="text/css" href="./bootstrap.gb.css"/>
+		<link rel="stylesheet" type="text/css" href="./markdown.css"/>
+		<link rel="shortcut icon" type="image/png" href="./gitblt-favicon.png" />
+		<meta name="ROBOTS" content="INDEX">
+		<meta http-equiv="imagetoolbar" content="no" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="keywords" content="java git server" />
+		
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+		<script>
+			!window.jQuery && document.write(<script src="./fancybox/jquery-1.4.3.min.js"><\/script>);
+		</script>
+		<script type="text/javascript" src="./fancybox/query.mousewheel-3.0.4.pack.js"></script>
+		<script type="text/javascript" src="./fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+		<link rel="stylesheet" type="text/css" href="./fancybox/jquery.fancybox-1.3.4.css" media="screen" />
+		
+		<script type="text/javascript" src="./screenshots.js"></script>
+		<style>
+			ul.noBullets {
+				list-style: none;
+			}
+		</style>
+		
+		<script type="text/javascript" src="prettify/prettify.js"></script>
+		<link href="prettify/prettify.css" type="text/css" rel="stylesheet" />
+		
+		<!-- Place this tag in your head or just before your close body tag -->
+		<link rel="canonical" href="http://gitblit.com" />
+		<link rel="publisher" href="https://plus.google.com/114464678392593421684" />
+		<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+		
+		<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-24377072-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+	</head>
+	<body style="padding-top:40px;"  onload="prettyPrint()">
+		<div class="topbar">
+			<div class="fill">
+				<div class="container">
+					<a class="brand" href="http://gitblit.com" title="gitblit homepage">
+						<img src="gitblt_25_white.png" width="79" height="25" alt="gitblit" class="logo"/>
+					</a>
+					
+					<ul class="nav">
+						<li><a href='index.html'>overview</a></li><li class='active'><a href='features.html'>features</a></li><li><a href='screenshots.html'>screenshots</a></li><li><a href='setup.html'>setup</a></li><li><a href='federation.html'>federation</a></li><li><a href='rpc.html'>rpc</a></li><li><a href='faq.html'>faq</a></li><li><a href='properties.html'>settings</a></li><li><a href='design.html'>design</a></li><li><a href='releases.html'>releases</a></li><li><a href='roadmap.html'>roadmap</a></		
+						<!-- Google Plus Badge -->
+						<li><a href="https://plus.google.com/114464678392593421684?prsrc=3" style="margin-top:3px;text-decoration: none;"><img src="https://ssl.gstatic.com/images/icons/gplus-16.png" width="16" height="16" style="border: 0;"/></a></li>
+						<!-- Google Plus One -->
+						<li><div style="margin-top:14px;"><g:plusone size="small" href="http://gitblit.com"></g:plusone></div></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="content">
+				<div class="markdown">
+<h2> Standard Features (GO/WAR)</h2>
+
+<ul>
+<li>JGit SmartHTTP servlet</li>
+<li>Browser and git client authentication</li>
+<li>Four <em>per-repository</em> access control configurations with a Read-Only control flag<ul>
+<li><img src="blank.png" alt="anonymous"/> <em>Anonymous View, Clone & Push</em></li>
+<li><img src="lock_go_16x16.png" alt="push"/> <em>Authenticated Push</em></li>
+<li><img src="lock_pull_16x16.png" alt="clone"/> <em>Authenticated Clone & Push</em></li>
+<li><img src="shield_16x16.png" alt="view"/> <em>Authenticated View, Clone & Push</em></li>
+<li><img src="cold_16x16.png" alt="freeze"/> Freeze repository (i.e. deny push, make read-only)</li>
+</ul>
+</li>
+<li>Ability to federate with one or more other Gitblit instances</li>
+<li>RSS/JSON RPC interface</li>
+<li>Java/Swing Gitblit Manager tool </li>
+<li>Gitweb inspired web UI</li>
+<li>Groovy pre- and post- push hook scripts, per-repository or globally for all repositories</li>
+<li>Email push notifications <em>(via sendmail.groovy push script)</em></li>
+<li>Administrators may create, edit, rename, or delete repositories through the web UI or RPC interface</li>
+<li>Administrators may create, edit, rename, or delete users through the web UI or RPC interface</li>
+<li>Administrators may create, edit, rename, or delete teams through the web UI or RPC interface</li>
+<li>Repository Owners may edit repositories through the web UI</li>
+<li>Gravatar integration</li>
+<li>Git-notes display support</li>
+<li>gh-pages display support (Jekyll is not supported)</li>
+<li>Branch metrics (uses Google Charts)</li>
+<li>HEAD and Branch RSS feeds</li>
+<li>Blame annotations view</li>
+<li>Dates can optionally be displayed using the browser's reported timezone</li>
+<li>Display of Author and Committer email addresses can be disabled</li>
+<li>Case-insensitive searching of commit messages, authors, or committers</li>
+<li>Dynamic zip downloads feature</li>
+<li>Markdown file view support</li>
+<li>Syntax highlighting for popular source code types</li>
+<li>Customizable regular expression substitution for commit messages (i.e. bug or code review link integration)</li>
+<li>Single text file for users configuration</li>
+<li>Optional utility pages<ul>
+<li><img src="book_16x16.png" alt="docs"/> Docs page which enumerates all Markdown files within a repository</li>
+<li><img src="bug_16x16.png" alt="tickets"/> Ticgit ticket pages <em>(based on last MIT release bf57b032 2009-01-27)</em></li>
+</ul>
+</li>
+</ul>
+
+<h2> Gitblit GO Features</h2>
+
+<ul>
+<li>Out-of-the-box integrated stack requiring minimal configuration</li>
+<li>Automatically generates a self-signed certificate for <em>localhost</em> https communications<br/>
+(includes script to generate a self-signed certificate for <em>your hostname</em>, see <a href="/setup.html">setup</a> for details)</li>
+<li>Single text file for configuring server and gitblit</li>
+<li>A Windows service installation script and configuration tool</li>
+</ul>
+
+<h2> Limitations</h2>
+
+<ul>
+<li>HTTP/HTTPS are the only supported Git protocols</li>
+<li>Built-in access controls are not path-based, they are repository-based.</li>
+<li>Only Administrators can create, rename or delete repositories</li>
+<li>Only Administrators can create, modify or delete users</li>
+<li>Only Administrators can create, modify or delete teams</li>
+<li>Native Git may be needed to periodically run git-gc as <a href="http://eclipse.org/jgit" title="Eclipse JGit Site">JGit</a> does not fully support the git-gc featureset.</li>
+</ul>
+
+<h3> Caveats</h3>
+
+<ul>
+<li>Gitblit may eat your data.  Use at your own risk.</li>
+<li>Gitblit may have security holes.  Patches welcome.  :)</li>
+</ul>			</div> <!-- markdown -->
+			<div style="margin-top:10px" class="page_footer">
+				<div style="float:right;">generated 2012-01-11</div>
+			The content of this page is licensed under the <a href="http://creativecommons.org/licenses/by/3.0">Creative Commons Attribution 3.0 License</a>.
+			</div>			
+		</div> <!-- content -->
+	</div> <!-- container -->	
+</body>
+</html>

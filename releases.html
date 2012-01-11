@@ -1,0 +1,235 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+	<head>
+		<title>Gitblit</title>
+		<link rel="stylesheet" type="text/css" href="./bootstrap.140.css"/>
+		<link rel="stylesheet" type="text/css" href="./bootstrap.gb.css"/>
+		<link rel="stylesheet" type="text/css" href="./markdown.css"/>
+		<link rel="shortcut icon" type="image/png" href="./gitblt-favicon.png" />
+		<meta name="ROBOTS" content="INDEX">
+		<meta http-equiv="imagetoolbar" content="no" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="keywords" content="java git server" />
+		
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+		<script>
+			!window.jQuery && document.write(<script src="./fancybox/jquery-1.4.3.min.js"><\/script>);
+		</script>
+		<script type="text/javascript" src="./fancybox/query.mousewheel-3.0.4.pack.js"></script>
+		<script type="text/javascript" src="./fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+		<link rel="stylesheet" type="text/css" href="./fancybox/jquery.fancybox-1.3.4.css" media="screen" />
+		
+		<script type="text/javascript" src="./screenshots.js"></script>
+		<style>
+			ul.noBullets {
+				list-style: none;
+			}
+		</style>
+		
+		<script type="text/javascript" src="prettify/prettify.js"></script>
+		<link href="prettify/prettify.css" type="text/css" rel="stylesheet" />
+		
+		<!-- Place this tag in your head or just before your close body tag -->
+		<link rel="canonical" href="http://gitblit.com" />
+		<link rel="publisher" href="https://plus.google.com/114464678392593421684" />
+		<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+		
+		<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-24377072-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+	</head>
+	<body style="padding-top:40px;"  onload="prettyPrint()">
+		<div class="topbar">
+			<div class="fill">
+				<div class="container">
+					<a class="brand" href="http://gitblit.com" title="gitblit homepage">
+						<img src="gitblt_25_white.png" width="79" height="25" alt="gitblit" class="logo"/>
+					</a>
+					
+					<ul class="nav">
+						<li><a href='index.html'>overview</a></li><li><a href='features.html'>features</a></li><li><a href='screenshots.html'>screenshots</a></li><li><a href='setup.html'>setup</a></li><li><a href='federation.html'>federation</a></li><li><a href='rpc.html'>rpc</a></li><li><a href='faq.html'>faq</a></li><li><a href='properties.html'>settings</a></li><li><a href='design.html'>design</a></li><li class='active'><a href='releases.html'>releases</a></li><li><a href='roadmap.html'>roadmap</a></		
+						<!-- Google Plus Badge -->
+						<li><a href="https://plus.google.com/114464678392593421684?prsrc=3" style="margin-top:3px;text-decoration: none;"><img src="https://ssl.gstatic.com/images/icons/gplus-16.png" width="16" height="16" style="border: 0;"/></a></li>
+						<!-- Google Plus One -->
+						<li><div style="margin-top:14px;"><g:plusone size="small" href="http://gitblit.com"></g:plusone></div></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="content">
+				<div class="markdown">
+<h2> Release History</h2>
+
+<h3> Current Release</h3>
+
+<p><strong>0.8.0</strong> (<a href="http://code.google.com/p/gitblit/downloads/detail?name=gitblit-0.8.0.zip">go</a> | <a href="http://code.google.com/p/gitblit/downloads/detail?name=gitblit-0.8.0.war">war</a> | <a href="http://code.google.com/p/gitblit/downloads/detail?name=express-0.8.0.zip">express</a> | <a href="http://code.google.com/p/gitblit/downloads/detail?name=fedclient-0.8.0.zip">fedclient</a> | <a href="http://code.google.com/p/gitblit/downloads/detail?name=manager-0.8.0.zip">manager</a> | <a href="http://code.google.com/p/gitblit/downloads/detail?name=gbapi-0.8.0.zip">api</a>) based on <a href="http://eclipse.org/jgit" title="Eclipse JGit Site">JGit 1.2.0 (201112221803-r)</a> &nbsp; <em>released 2012-01-11</em></p>
+
+<h4> additions</h4>
+
+<ul>
+<li>Platform-independent, Groovy push hook script mechanism.<br/>
+Hook scripts can be set per-repository, per-team, or globally for all repositories.<br/>
+<strong>New:</strong> <em>groovy.scriptsFolder = groovy</em><br/>
+<strong>New:</strong> <em>groovy.preReceiveScripts =</em><br/>
+<strong>New:</strong> <em>groovy.postReceiveScripts =</em></li>
+<li><em>sendmail.groovy</em> for optional email notifications on push.<br/>
+You must properly configure your SMTP server settings in <code>gitblit.properties</code> or <code>web.xml</code> to use <em>sendmail.groovy</em>.</li>
+<li>New global key for mailing lists.  This is used in conjunction with the <em>sendmail.groovy</em> hook script.  All repositories that use the <em>sendmail.groovy</em> script will include these addresses in the notification process.  Please see the Setup page for more details about configuring sendmail.<br/>
+<strong>New:</strong> <em>mail.mailingLists =</em></li>
+<li><em>com.gitblit.GitblitUserService</em>.  This is a wrapper object for the built-in user service implementations.  For those wanting to only implement custom authentication it is recommended to subclass GitblitUserService and override the appropriate methods.  Going forward, this will help insulate custom authentication from new IUserService API and/or changes in model classes.</li>
+<li>New default user service implementation: <em>com.gitblit.ConfigUserService</em> (<code>users.conf</code>)<br/>
+This user service implementation allows for serialization and deserialization of more sophisticated Gitblit User objects without requiring the encoding trickery now present in FileUserService (users.properties).  This will open the door for more advanced Gitblit features.<br/>
+For those upgrading from an earlier Gitblit version, a <code>users.conf</code> file will automatically be created for you from your existing <code>users.properties</code> file on your first launch of Gitblit <u>however</u> you will have to manually set <em>realm.userService=users.conf</em> to switch to the new user service.<br/>
+The original <code>users.properties</code> file and it's corresponding implementation are <strong>deprecated</strong>.<br/>
+<strong>New:</strong> <em>realm.userService = users.conf</em></li>
+<li>Teams for specifying user-repository access in bulk.  Teams may also specify mailing lists addresses and pre- &amp; post- receive hook scripts.</li>
+<li>Gravatar integration<br/>
+<strong>New:</strong> <em>web.allowGravatar = true</em> </li>
+<li>Activity page for aggregated repository activity.  This is a timeline of commit activity over the last N days for one or more repositories.<br/>
+<strong>New:</strong> <em>web.activityDuration = 14</em><br/>
+<strong>New:</strong> <em>web.timeFormat = HH:mm</em><br/>
+<strong>New:</strong> <em>web.datestampLongFormat = EEEE, MMMM d, yyyy</em></li>
+<li><em>Filters</em> menu for the Repositories page and Activity page.  You can filter by federation set, team, and simple custom regular expressions.  Custom expressions can be stored in <code>gitblit.properties</code> or <code>web.xml</code> or directly defined in your url (<a href='http://code.google.com/p/gitblit/issues/detail?id=27'>issue 27</a>)<br/>
+<strong>New:</strong> <em>web.customFilters=</em></li>
+<li>Flash-based 1-step <em>copy to clipboard</em> of the primary repository url based on Clippy<br/>
+<strong>New:</strong> <em>web.allowFlashCopyToClipboard = true</em></li>
+<li>JavaScript-based 3-step (click, ctrl+c, enter) <em>copy to clipboard</em> of the primary repository url in the event that you do not want to use Flash on your installation</li>
+<li>Empty repositories now link to an <em>empty repository</em> page which gives some direction to the user for the next step in using Gitblit.  This page displays the primary push/clone url of the repository and gives sample syntax for the git command-line client. (<a href='http://code.google.com/p/gitblit/issues/detail?id=31'>issue 31</a>)</li>
+<li>Repositories with a <em>gh-pages</em> branch will now have a <em>pages</em> link which will serve the content of this branch.  All resource requests are against the repository, Gitblit does not checkout/export this branch to a temporary filesystem.  Jekyll templating is not supported.</li>
+<li>Gitblit Express bundle to get started running Gitblit on RedHat's OpenShift cloud <span class="label warning">BETA</span></li>
+</ul>
+
+<h4> changes</h4>
+
+<ul>
+<li>Dropped display of trailing .git from repository names</li>
+<li>Gitblit GO is now monolithic like the WAR build. (<a href='http://code.google.com/p/gitblit/issues/detail?id=30'>issue 30</a>)<br/>
+This change helps adoption of GO in environments without an internet connection or with a restricted connection.</li>
+<li>Unit testing framework has been migrated to JUnit4 syntax and the test suite has been redesigned to run all unit tests, including rpc, federation, and git push/clone tests</li>
+</ul>
+
+<h4> fixes</h4>
+
+<ul>
+<li>Several a bugs in FileUserService related to cleaning up old repository permissions on a rename or delete</li>
+<li>Renaming a repository into a new subfolder failed (<a href='http://code.google.com/p/gitblit/issues/detail?id=33'>issue 33</a>)</li>
+</ul>
+
+<h4> dependency changes</h4>
+
+<ul>
+<li>updated to JGit 1.2.0</li>
+<li>added Groovy 1.8.5 </li>
+<li>added Clippy (bundled)</li>
+</ul>
+
+<h3> Older Releases</h3>
+
+<p><strong>0.7.0</strong> (<a href="http://code.google.com/p/gitblit/downloads/detail?name=gitblit-0.7.0.zip">go</a> | <a href="http://code.google.com/p/gitblit/downloads/detail?name=gitblit-0.7.0.war">war</a> | <a href="http://code.google.com/p/gitblit/downloads/detail?name=fedclient-0.7.0.zip">fedclient</a> | <a href="http://code.google.com/p/gitblit/downloads/detail?name=manager-0.7.0.zip">manager</a> | <a href="http://code.google.com/p/gitblit/downloads/detail?name=gbapi-0.7.0.zip">api</a>) based on <a href="http://eclipse.org/jgit" title="Eclipse JGit Site">JGit 1.1.0 (201109151100-r)</a> &nbsp; <em>released 2011-11-11</em></p>
+
+<ul>
+<li><strong>security</strong>: fixed security hole when cloning clone-restricted repository with TortoiseGit (<a href='http://code.google.com/p/gitblit/issues/detail?id=28'>issue 28</a>)</li>
+<li>improved: updated ui with Twitter's Bootstrap CSS toolkit<br/>
+<strong>New:</strong> <em>web.loginMessage = gitblit</em></li>
+<li>improved: repositories list performance by caching repository sizes (<a href='http://code.google.com/p/gitblit/issues/detail?id=27'>issue 27</a>)</li>
+<li>improved: summary page performance by caching metric calculations (<a href='http://code.google.com/p/gitblit/issues/detail?id=25'>issue 25</a>)</li>
+<li>added: authenticated JSON RPC mechanism <br/>
+<strong>New:</strong> <em>web.enableRpcServlet = true</em><br/>
+<strong>New:</strong> <em>web.enableRpcManagement = false</em><br/>
+<strong>New:</strong> <em>web.enableRpcAdministration = false</em></li>
+<li>added: Gitblit API RSS/JSON RPC library</li>
+<li>added: Gitblit Manager (Java/Swing Application) for remote administration of a Gitblit server.</li>
+<li>added: per-repository setting to skip size calculation (faster repositories page loading)</li>
+<li>added: per-repository setting to skip summary metrics calculation (faster summary page loading)</li>
+<li>added: IUserService.setup(IStoredSettings) for custom user service implementations</li>
+<li>added: setting to control Gitblit GO context path for proxy setups <em>(Github/trygvis)</em><br/>
+<strong>New:</strong> <em>server.contextPath = /</em></li>
+<li>added: <em>combined-md5</em> password storage option which stores the hash of username+password as the password <em>(Github/alyandon)</em></li>
+<li>added: repository owners are automatically granted access for git, feeds, and zip downloads without explicitly selecting them <em>(Github/dadalar)</em></li>
+<li>added: RSS feeds now include regex substitutions on commit messages for bug trackers, etc</li>
+<li>fixed: federation protocol timestamps.  dates are now serialized to the <a href="http://en.wikipedia.org/wiki/ISO_8601">iso8601</a> standard.<br/>
+<strong>This breaks 0.6.0 federation clients/servers.</strong></li>
+<li>fixed: collision on rename for repositories and users</li>
+<li>fixed: Gitblit can now browse the Linux kernel repository (<a href='http://code.google.com/p/gitblit/issues/detail?id=25'>issue 25</a>)</li>
+<li>fixed: Gitblit now runs on Servlet 3.0 webservers (e.g. Tomcat 7, Jetty 8) (<a href='http://code.google.com/p/gitblit/issues/detail?id=23'>issue 23</a>)</li>
+<li>fixed: Set the RSS content type of syndication feeds for Firefox 4 (<a href='http://code.google.com/p/gitblit/issues/detail?id=22'>issue 22</a>)</li>
+<li>fixed: RSS feeds are now properly encoded to UTF-8</li>
+<li>fixed: RSS feeds now properly generate parameterized links if <em>web.mountParameters=false</em></li>
+<li>fixed: Null pointer exception if did not set federation strategy (<a href='http://code.google.com/p/gitblit/issues/detail?id=20'>issue 20</a>)</li>
+<li>fixed: Gitblit GO allows SSL renegotiation if running on Java 1.6.0_22 or later</li>
+<li>updated: MarkdownPapers 1.2.5</li>
+<li>updated: Wicket 1.4.19</li>
+</ul>
+
+<p><strong>0.6.0</strong> (<a href="http://code.google.com/p/gitblit/downloads/detail?name=gitblit-0.6.0.zip">go</a> | <a href="http://code.google.com/p/gitblit/downloads/detail?name=gitblit-0.6.0.war">war</a> | <a href="http://code.google.com/p/gitblit/downloads/detail?name=fedclient-0.6.0.zip">fedclient</a>) based on <a href="http://eclipse.org/jgit" title="Eclipse JGit Site">JGit 1.1.0 (201109151100-r)</a> &nbsp; <em>released 2011-09-27</em></p>
+
+<ul>
+<li>added: federation feature to allow gitblit instances (or gitblit federation clients) to pull repositories and, optionally, settings and accounts from other gitblit instances.  This is something like <a href="http://svnbook.red-bean.com/en/1.5/svn.ref.svnsync.html">svn-sync</a> for gitblit.<br/>
+<strong>New:</strong> <em>federation.name =</em><br/>
+<strong>New:</strong> <em>federation.passphrase =</em><br/>
+<strong>New:</strong> <em>federation.allowProposals = false</em><br/>
+<strong>New:</strong> <em>federation.proposalsFolder = proposals</em><br/>
+<strong>New:</strong> <em>federation.defaultFrequency = 60 mins</em><br/>
+<strong>New:</strong> <em>federation.sets =</em><br/>
+<strong>New:</strong> <em>mail.</em> settings for sending emails<br/>
+<strong>New:</strong> user role <em>#notfederated</em> to prevent a user account from being pulled by a federated Gitblit instance</li>
+<li>added: google-gson dependency</li>
+<li>added: javamail dependency</li>
+<li>updated: MarkdownPapers 1.1.1</li>
+<li>updated: Wicket 1.4.18</li>
+<li>updated: JGit 1.1.0</li>
+<li>fixed: syndication urls for WAR deployments</li>
+<li>fixed: authentication for zip downloads</li>
+</ul>
+
+<p><strong>0.5.2</strong> (<a href="http://code.google.com/p/gitblit/downloads/detail?name=gitblit-0.5.2.zip">go</a> | <a href="http://code.google.com/p/gitblit/downloads/detail?name=gitblit-0.5.2.war">war</a>) based on <a href="http://eclipse.org/jgit" title="Eclipse JGit Site">JGit 1.0.0 (201106090707-r)</a> &nbsp; <em>released 2011-07-27</em></p>
+
+<ul>
+<li>fixed: active repositories with a HEAD that pointed to an empty branch caused internal errors (<a href='http://code.google.com/p/gitblit/issues/detail?id=14'>issue 14</a>)</li>
+<li>fixed: bare-cloned repositories were listed as (empty) and were not clickable (<a href='http://code.google.com/p/gitblit/issues/detail?id=13'>issue 13</a>)</li>
+<li>fixed: default port for Gitblit GO is now 8443 to be more linux/os x friendly (<a href='http://code.google.com/p/gitblit/issues/detail?id=12'>issue 12</a>)</li>
+<li>fixed: repositories can now be reliably deleted and renamed (<a href='http://code.google.com/p/gitblit/issues/detail?id=10'>issue 10</a>)</li>
+<li>fixed: users can now change their passwords (<a href='http://code.google.com/p/gitblit/issues/detail?id=1'>issue 1</a>)</li>
+<li>fixed: always show root repository group first, i.e. don't sort root group with other groups</li>
+<li>fixed: tone-down repository group header color</li>
+<li>added: optionally display repository on-disk size on repositories page<br/>
+<strong>New:</strong> <em>web.showRepositorySizes = true</em></li>
+<li>added: forward-slashes ('/', %2F) can be encoded using a custom character to workaround some servlet container default security measures for proxy servers<br/>
+<strong>New:</strong> <em>web.forwardSlashCharacter = /</em></li>
+<li>updated: MarkdownPapers 1.1.0</li>
+<li>updated: Jetty 7.4.3</li>
+</ul>
+
+<p><strong>0.5.1</strong> (<a href="http://code.google.com/p/gitblit/downloads/detail?name=gitblit-0.5.1.zip">go</a> | <a href="http://code.google.com/p/gitblit/downloads/detail?name=gitblit-0.5.1.war">war</a>) based on <a href="http://eclipse.org/jgit" title="Eclipse JGit Site">JGit 1.0.0 (201106090707-r)</a> &nbsp; <em>released 2011-06-28</em></p>
+
+<ul>
+<li>clarified SSL certificate generation and configuration for both server-side and client-side</li>
+<li>added some more troubleshooting information to documentation</li>
+<li>replaced JavaService with Apache Commons Daemon</li>
+</ul>
+
+<p><strong>0.5.0</strong> (<a href="http://code.google.com/p/gitblit/downloads/detail?name=gitblit-0.5.0.zip">go</a> | <a href="http://code.google.com/p/gitblit/downloads/detail?name=gitblit-0.5.0.war">war</a>) based on <a href="http://eclipse.org/jgit" title="Eclipse JGit Site">JGit 1.0.0 (201106090707-r)</a> &nbsp; <em>released 2011-06-26</em></p>
+
+<ul>
+<li>initial release</li>
+</ul>			</div> <!-- markdown -->
+			<div style="margin-top:10px" class="page_footer">
+				<div style="float:right;">generated 2012-01-11</div>
+			The content of this page is licensed under the <a href="http://creativecommons.org/licenses/by/3.0">Creative Commons Attribution 3.0 License</a>.
+			</div>			
+		</div> <!-- content -->
+	</div> <!-- container -->	
+</body>
+</html>

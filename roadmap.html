@@ -1,0 +1,137 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+	<head>
+		<title>Gitblit</title>
+		<link rel="stylesheet" type="text/css" href="./bootstrap.140.css"/>
+		<link rel="stylesheet" type="text/css" href="./bootstrap.gb.css"/>
+		<link rel="stylesheet" type="text/css" href="./markdown.css"/>
+		<link rel="shortcut icon" type="image/png" href="./gitblt-favicon.png" />
+		<meta name="ROBOTS" content="INDEX">
+		<meta http-equiv="imagetoolbar" content="no" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="keywords" content="java git server" />
+		
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+		<script>
+			!window.jQuery && document.write(<script src="./fancybox/jquery-1.4.3.min.js"><\/script>);
+		</script>
+		<script type="text/javascript" src="./fancybox/query.mousewheel-3.0.4.pack.js"></script>
+		<script type="text/javascript" src="./fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+		<link rel="stylesheet" type="text/css" href="./fancybox/jquery.fancybox-1.3.4.css" media="screen" />
+		
+		<script type="text/javascript" src="./screenshots.js"></script>
+		<style>
+			ul.noBullets {
+				list-style: none;
+			}
+		</style>
+		
+		<script type="text/javascript" src="prettify/prettify.js"></script>
+		<link href="prettify/prettify.css" type="text/css" rel="stylesheet" />
+		
+		<!-- Place this tag in your head or just before your close body tag -->
+		<link rel="canonical" href="http://gitblit.com" />
+		<link rel="publisher" href="https://plus.google.com/114464678392593421684" />
+		<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+		
+		<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-24377072-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+	</head>
+	<body style="padding-top:40px;"  onload="prettyPrint()">
+		<div class="topbar">
+			<div class="fill">
+				<div class="container">
+					<a class="brand" href="http://gitblit.com" title="gitblit homepage">
+						<img src="gitblt_25_white.png" width="79" height="25" alt="gitblit" class="logo"/>
+					</a>
+					
+					<ul class="nav">
+						<li><a href='index.html'>overview</a></li><li><a href='features.html'>features</a></li><li><a href='screenshots.html'>screenshots</a></li><li><a href='setup.html'>setup</a></li><li><a href='federation.html'>federation</a></li><li><a href='rpc.html'>rpc</a></li><li><a href='faq.html'>faq</a></li><li><a href='properties.html'>settings</a></li><li><a href='design.html'>design</a></li><li><a href='releases.html'>releases</a></li><li class='active'><a href='roadmap.html'>roadmap</a></		
+						<!-- Google Plus Badge -->
+						<li><a href="https://plus.google.com/114464678392593421684?prsrc=3" style="margin-top:3px;text-decoration: none;"><img src="https://ssl.gstatic.com/images/icons/gplus-16.png" width="16" height="16" style="border: 0;"/></a></li>
+						<!-- Google Plus One -->
+						<li><div style="margin-top:14px;"><g:plusone size="small" href="http://gitblit.com"></g:plusone></div></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="content">
+				<div class="markdown">
+<h2> Roadmap</h2>
+
+<p>This is not exactly a formal roadmap but it is a priority list of what might be implemented in future releases.<br/>
+This list is volatile.</p>
+
+<h3> TODO (high priority)</h3>
+
+<ul>
+<li>Eclipse: create plugin to enumerate repositories and delegate cloning to EGit</li>
+<li>Manager: support federation RPCs</li>
+<li>Manager: redesign ref indicators in log, search, and activity views to support multiple local branches, remote branches, and tags</li>
+<li>Gitblit: Lucene integration with multi-repository search (<a href='http://code.google.com/p/gitblit/issues/detail?id=16'>issue 16</a>)</li>
+<li>Gitblit: Serve repositories on root URL rather than /git (investigate JGit 1.2 GitFilter)</li>
+</ul>
+
+<h3> TODO (medium priority)</h3>
+
+<ul>
+<li>Gitblit: editable settings page in GO/WAR</li>
+<li>Gitblit: investigate create-repository-on-push.<ul>
+<li>Maybe a new user role to allow this?</li>
+<li>Maybe a server setting to disable this completely?</li>
+<li>Pusher/Creator becomes repository owner and can then manipulate access lists, etc?</li>
+</ul>
+</li>
+<li>Gitblit: Clone Repository feature (<a href='http://code.google.com/p/gitblit/issues/detail?id=5'>issue 5</a>)<ul>
+<li>optional scheduled pulls</li>
+<li>optional automatic push to origin/remotes?</li>
+<li>optional manual push to origin/remotes?</li>
+</ul>
+</li>
+<li>Gitblit: Repository regex substitutions should be stored in .git/.config, not gitblit.properties</li>
+<li>Gitblit: Consider allowing git:// protocol using JGit<ul>
+<li>new setting <em>git.allowGitProtocol</em> to enable/disable git:// protocol</li>
+<li>unrestricted repositories would have anonymous RW git:// access</li>
+<li>push-restricted repositories would have anonymous R git:// access</li>
+<li>clone-restricted repositories would prohibit git:// access</li>
+<li>view-restricted repositories would prohibit git:// access</li>
+</ul>
+</li>
+</ul>
+
+<h3> IDEAS</h3>
+
+<ul>
+<li>Gitblit: Re-use the EGit branch visualization table cell renderer as some sort of servlet</li>
+<li>Gitblit: Support personal repositories (~username/repo)</li>
+<li>Gitblit: diff should highlight inserted/removed fragment compared to original line</li>
+<li>Gitblit: implement branch permission controls as Groovy pre-receive script.<br/>
+<em>Maintain permissions text file similar to a gitolite configuration file or svn authz file.</em></li>
+<li>Gitblit: consider user-subscribed email notifications for a repository branch.</li>
+<li>Gitblit: aggregate RSS feeds by tag or subfolder</li>
+<li>Gitblit: Consider creating more Git model objects and exposing them via the JSON RPC interface to allow inspection/retrieval of Git commits, Git trees, etc from Gitblit.</li>
+<li>Gitblit: Blame coloring by author (<a href='http://code.google.com/p/gitblit/issues/detail?id=2'>issue 2</a>)</li>
+<li>Gitblit: View binary files in blob page (<a href='http://code.google.com/p/gitblit/issues/detail?id=6'>issue 6</a>)</li>
+<li>Gitblit: Stronger ticgit integration (<a href='http://code.google.com/p/gitblit/issues/detail?id=8'>issue 8</a>)</li>
+</ul>			</div> <!-- markdown -->
+			<div style="margin-top:10px" class="page_footer">
+				<div style="float:right;">generated 2012-01-11</div>
+			The content of this page is licensed under the <a href="http://creativecommons.org/licenses/by/3.0">Creative Commons Attribution 3.0 License</a>.
+			</div>			
+		</div> <!-- content -->
+	</div> <!-- container -->	
+</body>
+</html>

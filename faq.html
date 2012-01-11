@@ -1,0 +1,278 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<html>
+	<head>
+		<title>Gitblit</title>
+		<link rel="stylesheet" type="text/css" href="./bootstrap.140.css"/>
+		<link rel="stylesheet" type="text/css" href="./bootstrap.gb.css"/>
+		<link rel="stylesheet" type="text/css" href="./markdown.css"/>
+		<link rel="shortcut icon" type="image/png" href="./gitblt-favicon.png" />
+		<meta name="ROBOTS" content="INDEX">
+		<meta http-equiv="imagetoolbar" content="no" />
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+		<meta name="keywords" content="java git server" />
+		
+		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
+		<script>
+			!window.jQuery && document.write(<script src="./fancybox/jquery-1.4.3.min.js"><\/script>);
+		</script>
+		<script type="text/javascript" src="./fancybox/query.mousewheel-3.0.4.pack.js"></script>
+		<script type="text/javascript" src="./fancybox/jquery.fancybox-1.3.4.pack.js"></script>
+		<link rel="stylesheet" type="text/css" href="./fancybox/jquery.fancybox-1.3.4.css" media="screen" />
+		
+		<script type="text/javascript" src="./screenshots.js"></script>
+		<style>
+			ul.noBullets {
+				list-style: none;
+			}
+		</style>
+		
+		<script type="text/javascript" src="prettify/prettify.js"></script>
+		<link href="prettify/prettify.css" type="text/css" rel="stylesheet" />
+		
+		<!-- Place this tag in your head or just before your close body tag -->
+		<link rel="canonical" href="http://gitblit.com" />
+		<link rel="publisher" href="https://plus.google.com/114464678392593421684" />
+		<script type="text/javascript" src="https://apis.google.com/js/plusone.js"></script>
+		
+		<script type="text/javascript">
+
+  var _gaq = _gaq || [];
+  _gaq.push(['_setAccount', 'UA-24377072-1']);
+  _gaq.push(['_trackPageview']);
+
+  (function() {
+    var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+    ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+    var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+  })();
+
+</script>
+
+	</head>
+	<body style="padding-top:40px;"  onload="prettyPrint()">
+		<div class="topbar">
+			<div class="fill">
+				<div class="container">
+					<a class="brand" href="http://gitblit.com" title="gitblit homepage">
+						<img src="gitblt_25_white.png" width="79" height="25" alt="gitblit" class="logo"/>
+					</a>
+					
+					<ul class="nav">
+						<li><a href='index.html'>overview</a></li><li><a href='features.html'>features</a></li><li><a href='screenshots.html'>screenshots</a></li><li><a href='setup.html'>setup</a></li><li><a href='federation.html'>federation</a></li><li><a href='rpc.html'>rpc</a></li><li class='active'><a href='faq.html'>faq</a></li><li><a href='properties.html'>settings</a></li><li><a href='design.html'>design</a></li><li><a href='releases.html'>releases</a></li><li><a href='roadmap.html'>roadmap</a></		
+						<!-- Google Plus Badge -->
+						<li><a href="https://plus.google.com/114464678392593421684?prsrc=3" style="margin-top:3px;text-decoration: none;"><img src="https://ssl.gstatic.com/images/icons/gplus-16.png" width="16" height="16" style="border: 0;"/></a></li>
+						<!-- Google Plus One -->
+						<li><div style="margin-top:14px;"><g:plusone size="small" href="http://gitblit.com"></g:plusone></div></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="container">
+			<div class="content">
+				<div class="markdown">
+<h2> Troubleshooting</h2>
+
+<h3> Eclipse/Egit/JGit complains that it &quot;can't open upload pack&quot;?</h3>
+
+<p>There are a few ways this can occur:</p>
+
+<ol>
+<li>You are using https with a self-signed certificate and you <strong>did not</strong> configure <em>http.sslVerify=false</em><ol>
+<li>Window-&gt;Preferences-&gt;Team-&gt;Git-&gt;Configuration</li>
+<li>Click the <em>New Entry</em> button</li>
+<li><pre>Key = <em>http.sslVerify</em>
+Value = <em>false</em></pre></li>
+</ol>
+</li>
+<li>Gitblit GO's default self-signed certificate is bound to <em>localhost</em> and you are trying to clone/push between machines.<ol>
+<li>Review the contents of <code>makekeystore.cmd</code></li>
+<li>Set <em>your hostname</em> in the <em>HOSTNAME</em> variable.</li>
+<li>Execute the script.<br/>This will generate a new certificate and keystore for <em>your hostname</em> protected by <em>server.storePassword</em>. </li>
+</ol>
+</li>
+<li>The repository is clone-restricted and you don't have access.</li>
+<li>The repository is clone-restricted and your password changed.</li>
+<li>A regression in Gitblit.  :(</li>
+</ol>
+
+<h3> Why can't I access Gitblit GO from another machine?</h3>
+
+<ol>
+<li>Please check <em>server.httpBindInterface</em> and <em>server.httpsBindInterface</em> in <code>gitblit.properties</code>, you may be only be serving on <em>localhost</em>.</li>
+<li>Please see the above answer about &quot;<strong>can't open upload pack</strong>&quot;.</li>
+<li>Ensure that any firewall you may have running on the Gitblit server either has an exception for your specified ports or for the running process.</li>
+</ol>
+
+<h3> How do I run Gitblit GO on port 80 or 443 in Linux?</h3>
+
+<p>Linux requires root permissions to serve on ports &lt; 1024.<br/>
+Run the server as <em>root</em> (security concern) or change the ports you are serving to 8080 (http) and/or 8443 (https). </p>
+
+<h3> Gitblit GO does not list my repositories?!</h3>
+
+<ol>
+<li>Confirm that the value <em>git.repositoriesFolder</em> in <code>gitblit.properties</code> actually points to your repositories folder.</li>
+<li>Confirm that the Gitblit GO process has full read-write-execute permissions to your <em>git.repositoriesFolder</em>. </li>
+</ol>
+
+<h3> Gitblit WAR does not list my repositories?!</h3>
+
+<ol>
+<li>Confirm that the &lt;context-param&gt; <em>git.repositoriesFolder</em> value in your <code>web.xml</code> file actually points to your repositories folder.</li>
+<li>Confirm that the servlet container process has full read-write-execute permissions to your <em>git.repositoriesFolder</em>.</li>
+</ol>
+
+<h3> Gitblit WAR will not authenticate any users?!</h3>
+
+<p>Confirm that the &lt;context-param&gt; <em>realm.userService</em> value in your <code>web.xml</code> file actually points to a <code>users.conf</code> or <code>users.properties</code> file.</p>
+
+<h3> Gitblit won't open my grouped repository (/group/myrepo.git) or browse my log/branch/tag/ref?!</h3>
+
+<p>This is likely an url encoding/decoding problem with forward slashes:</p>
+
+<p><strong>bad</strong></p>
+
+<pre><code>http://192.168.1.2/log/myrepo.git/refs/heads/master
+</code></pre>
+
+<p><strong>good</strong></p>
+
+<pre><code>http://192.168.1.2/log/myrepo.git/refs%2Fheads%2Fmaster
+</code></pre>
+
+<p><strong>NOTE:</strong><br/>
+You can not trust the url in the address bar of your browser since your browser may <em>prettify</em> the url.  When in doubt, <em>View Source</em> of the generated html to confirm the <em>href</em>.</p>
+
+<p>There are two possible workarounds for this issue.  In <code>gitblit.properties</code> or <code>web.xml</code>:</p>
+
+<ol>
+<li>try setting <em>web.mountParameters</em> to <em>false</em>.<br/>This changes the url scheme from mounted (<em>/commit/myrepo.git/abcdef</em>) to parameterized (<em>/commit/?r=myrepo.git&h=abcdef</em>).</li>
+<li>try changing <em>web.forwardSlashCharacter</em> to an asterisk or a <strong>!</strong></li>
+</ol>
+
+<h3> Running Gitblit behind mod_proxy or some other proxy layer</h3>
+
+<p>You must ensure that the proxy does not decode and then re-encode request urls with interpretation of forward-slashes (<em>%2F</em>).  If your proxy layer does re-encode embedded forward-slashes then you may not be able to browse grouped repositories or logs, branches, and tags <strong>unless</strong> you set <em>web.mountParameters=false</em>.</p>
+
+<p>If you are using Apache mod_proxy, specify <a href="http://httpd.apache.org/docs/2.2/mod/core.html#allowencodedslashes">AllowEncodedSlashes NoDecode</a>.</p>
+
+<h3> Running Gitblit on Tomcat</h3>
+
+<p>Tomcat takes the extra precaution of <a href="http://tomcat.apache.org/security-6.html#Fixed_in_Apache_Tomcat_6.0.10">disallowing embedded slashes by default</a>.  This breaks Gitblit urls.<br/>
+You have a few options on how to handle this scenario:</p>
+
+<ol>
+<li><a href="http://tomcat.apache.org/security-6.html#Fixed_in_Apache_Tomcat_6.0.10">Tweak Tomcat</a><br/>
+Add <em>org.apache.tomcat.util.buf.UDecoder.ALLOW_ENCODED_SLASH=true</em> to <em>CATALINA_OPTS</em></li>
+<li><em>web.mountParameters = false</em> and use non-pretty, parameterized urls</li>
+<li><em>web.forwardSlashCharacter = !</em> which tells Gitblit to use <strong>!</strong> instead of <strong>/</strong></li>
+</ol>
+
+<h2> General Interest Questions</h2>
+
+<h3> Gitblit?  What kind of name is that?</h3>
+
+<p>It's a phonetic play on <a href="http://en.wikipedia.org/wiki/Bit_blit" title="Wikipedia Bitblt">bitblt</a> which is an image processing operation meaning <em>bit-block transfer</em>.</p>
+
+<h3> Why use Gitblit?</h3>
+
+<p>It's a small tool that allows you to easily manage shared repositories and doesn't require alot of setup or git kung-foo.</p>
+
+<h3> Who is the target user for Gitblit?</h3>
+
+<p>Small workgroups that require centralized repositories.</p>
+
+<p>Gitblit is not meant to be a social coding resource like <a href="http://github.com">Github</a> or <a href="http://bitbucket.com">Bitbucket</a> with 100s or 1000s of users.  Gitblit is designed to fulfill the same function as your centralized Subversion or CVS server.</p>
+
+<h3> Why does Gitblit exist when there is Git and Gitweb?</h3>
+
+<p>As a Java developer I prefer that as much of my tooling as possible is Java.<br/>
+Originally, I was going to use <a href="http://mercurial.selenic.com">Mercurial</a> but...</p>
+
+<ul>
+<li>MercurialEclipse <a href="http://mercurial.808500.n3.nabble.com/Hg4J-Mercurial-pure-Java-library-tp2693090p2694555.html">shells to Python, writes to System.out, and captures System.in</a><br/>
+Parsing command-line output is fragile and suboptimal.<br/>Unfortunately this is necessary because Mercurial is an application, not a library.</li>
+<li>Mercurial HTTP/HTTPS needs to run as CGI through Apache/IIS/etc, as mod_python through Apache, or served with a built-in http server.<br/>
+This requires setup and maintenance of multiple, mixed 3rd party components.</li>
+</ul>
+
+<p>Gitblit eliminates all that complication with its 100% Java stack and simple single configuration file.</p>
+
+<p>Additionally, Git and Gitweb do not offer repository creation or user management.</p>
+
+<h3> Do I need real Git?</h3>
+
+<p>No (mostly).  Gitblit is based on <a href="http://eclipse.org/jgit" title="Eclipse JGit Site">JGit</a> which is a pure Java implementation of the <a href="http://git-scm.com" title="Official Git Site">Git version control system</a>.<br/>
+Everything you need for Gitblit (except Java) is either bundled in the distribution file or automatically downloaded on execution.</p>
+
+<h4> mostly</h4>
+
+<p>JGit does not fully support the git-gc featureset (garbage collection) so you may want native Git to periodically run git-gc until <a href="http://eclipse.org/jgit" title="Eclipse JGit Site">JGit</a> fully supports this feature.</p>
+
+<h3> Can I run Gitblit in conjunction with my existing Git tooling?</h3>
+
+<p>Yes.</p>
+
+<h3> Do I need a JDK or can I use a JRE?</h3>
+
+<p>Gitblit will run just fine with a JRE.  Gitblit can optionally use <code>keytool</code> from the JDK to generate self-signed certificates, but normally Gitblit uses <a href="http://bouncycastle.org" title="The Legion of the Bouncy Castle">BouncyCastle</a> for that need.</p>
+
+<h3> Does Gitblit use a database to store its data?</h3>
+
+<p>No.  Gitblit stores its repository configuration information within the <code>.git/config</code> file and its user information in <code>users.conf</code>, <code>users.properties</code>, or whatever filename is configured in <code>gitblit.properties</code>.</p>
+
+<h3> Can I manually edit users.conf, users.properties, gitblit.properties, or .git/config?</h3>
+
+<p>Yes.  You can manually manipulate all of them and (most) changes will be immediately available to Gitblit.<br/>Exceptions to this are noted in <code>gitblit.properties</code>.</p>
+
+<p><strong>NOTE:</strong><br/>
+Care must be taken to preserve the relationship between user roles and repository names.<br/>Please see the <em>User Roles</em> section of the <a href="/setup.html">setup</a> page for details.</p>
+
+<h3> Can I restrict access to branches or paths within a repository?</h3>
+
+<p>No, not out-of-the-box.  Access restrictions apply to the repository as a whole.</p>
+
+<p>Gitblit's simple authentication and authorization mechanism can be used to facilitate one or more of the <a href="http://progit.org/book/ch5-1.html">workflows outlined here</a>.</p>
+
+<p>Should you require more fine-grained access controls you might consider writing a Groovy <em>prereceive</em> script to block updating branch refs based on some permissions file.  I would be interested in a generic, re-usable script to include with Gitblit, should someone want to implement it.</p>
+
+<p>Alternatively, you could use <a href="https://github.com/sitaramc/gitolite">gitolite</a> and SSH for your repository access.</p>
+
+<h3> Can I authenticate users against XYZ?</h3>
+
+<p>Yes.  The user service is pluggable.  You may write your own complete user service by implementing the <em>com.gitblit.IUserService</em> interface.  Or you may subclass <em>com.gitblit.GitblitUserService</em> and override just the authentication. Set the fully qualified classname as the <em>realm.userService</em> property.</p>
+
+<h3> Why doesn't Gitblit support SSH?</h3>
+
+<p>Gitblit could integrate <a href="http://mina.apache.org" title="Apache Mina">Apache Mina</a> to provide SSH access.  However, doing so violates Gitblit's first design principle: <a href="http://en.wikipedia.org/wiki/KISS_principle">KISS</a>.<br/>
+SSH support requires creating, exchanging, and managing SSH keys (arguably not more complicated than managing users).  While this is possible, JGit's SmartHTTP implementation is a simpler and universal transport mechanism.</p>
+
+<p>You might consider running <a href="http://gerrit.googlecode.org">Gerrit</a> which does integrate <a href="http://mina.apache.org" title="Apache Mina">Apache Mina</a> and supports SSH or you might consider serving <a href="http://git-scm.com" title="Official Git Site">Git</a> on Linux which would offer real SSH support and also allow use of <a href="https://git.wiki.kernel.org/index.php/InterfacesFrontendsAndTools">many other compelling Git solutions</a>.</p>
+
+<h3> What types of Search does Gitblit support?</h3>
+
+<p>Gitblit supports case-insensitive searches of <em>commit message</em> (default), <em>author</em>, and <em>committer</em>.<br/></p>
+
+<p>To search by <em>author</em> or <em>committer</em> use the following syntax in the search box:</p>
+
+<pre><code>author: james
+committer: james
+</code></pre>
+
+<p>Alternatively, you could enable the search type dropdown list in your <code>gitblit.properties</code> file.</p>
+
+<h3> Why did you call the setting federation.N.frequency instead of federation.N.period?!</h3>
+
+<p>Yes, yes I know that you are really specifying the period, but Frequency sounds better to me.  :)</p>
+
+<h3> Can Gitblit be translated?</h3>
+
+<p>Yes.  Most messages are localized to a standard Java properties file.			</div> <!-- markdown -->
+			<div style="margin-top:10px" class="page_footer">
+				<div style="float:right;">generated 2012-01-11</div>
+			The content of this page is licensed under the <a href="http://creativecommons.org/licenses/by/3.0">Creative Commons Attribution 3.0 License</a>.
+			</div>			
+		</div> <!-- content -->
+	</div> <!-- container -->	
+</body>
+</html>
