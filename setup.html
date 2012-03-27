@@ -2,29 +2,22 @@
 <html>
 	<head>
 		<title>Gitblit</title>
-		<link rel="stylesheet" type="text/css" href="./bootstrap.140.css"/>
-		<link rel="stylesheet" type="text/css" href="./bootstrap.gb.css"/>
-		<link rel="stylesheet" type="text/css" href="./markdown.css"/>
+		<link rel="stylesheet" href="./bootstrap/css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="./gitblit.css"/>
 		<link rel="shortcut icon" type="image/png" href="./gitblt-favicon.png" />
 		<meta name="ROBOTS" content="INDEX">
 		<meta http-equiv="imagetoolbar" content="no" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<meta name="keywords" content="java git server" />
+
+		<script type="text/javascript" src="./bootstrap/js/jquery.js"></script>
+		<script type="text/javascript" src="./bootstrap/js/bootstrap.js"></script>
 		
-		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
-		<script>
-			!window.jQuery && document.write(<script src="./fancybox/jquery-1.4.3.min.js"><\/script>);
-		</script>
 		<script type="text/javascript" src="./fancybox/query.mousewheel-3.0.4.pack.js"></script>
 		<script type="text/javascript" src="./fancybox/jquery.fancybox-1.3.4.pack.js"></script>
 		<link rel="stylesheet" type="text/css" href="./fancybox/jquery.fancybox-1.3.4.css" media="screen" />
 		
-		<script type="text/javascript" src="./screenshots.js"></script>
-		<style>
-			ul.noBullets {
-				list-style: none;
-			}
-		</style>
+		<script type="text/javascript" src="./screenshots.js"></script>		
 		
 		<script type="text/javascript" src="prettify/prettify.js"></script>
 		<link href="prettify/prettify.css" type="text/css" rel="stylesheet" />
@@ -49,9 +42,9 @@
 </script>
 
 	</head>
-	<body style="padding-top:40px;"  onload="prettyPrint()">
-		<div class="topbar">
-			<div class="fill">
+	<body onload="prettyPrint()">
+		<div class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
 				<div class="container">
 					<a class="brand" href="http://gitblit.com" title="gitblit homepage">
 						<img src="gitblt_25_white.png" width="79" height="25" alt="gitblit" class="logo"/>
@@ -68,12 +61,11 @@
 			</div>
 		</div>
 		<div class="container">
-			<div class="content">
-				<div class="markdown">
+			<div class="markdown">
 <h2> Gitblit WAR Setup</h2>
 
 <ol>
-<li>Download <a href="http://code.google.com/p/gitblit/downloads/detail?name=gitblit-0.8.2.war">Gitblit WAR 0.8.2</a> to the webapps folder of your servlet container.</li>
+<li>Download <a href="http://code.google.com/p/gitblit/downloads/detail?name=gitblit-0.9.0.war">Gitblit WAR 0.9.0</a> to the webapps folder of your servlet container.</li>
 <li>You may have to manually extract the WAR (zip file) to a folder within your webapps folder.</li>
 <li>Copy the <code>WEB-INF/users.conf</code> file to a location outside the webapps folder that is accessible by your servlet container.<br/>
 Optionally copy the example hook scripts in <code>WEB-INF/groovy</code> to a location outside the webapps folder that is accesible by your servlet container.</li>
@@ -93,7 +85,7 @@ Open <code>web.xml</code> in your favorite text editor and make sure to review a
 <h2> Gitblit GO Setup</h2>
 
 <ol>
-<li>Download and unzip <a href="http://code.google.com/p/gitblit/downloads/detail?name=gitblit-0.8.2.zip">Gitblit GO 0.8.2</a>.<br/>
+<li>Download and unzip <a href="http://code.google.com/p/gitblit/downloads/detail?name=gitblit-0.9.0.zip">Gitblit GO 0.9.0</a>.<br/>
 <em>Its best to eliminate spaces in the path name.</em> </li>
 <li>The server itself is configured through a simple text file.<br/>
 Open <code>gitblit.properties</code> in your favorite text editor and make sure to review and set:<ul>
@@ -177,6 +169,7 @@ C:\Program Files\Java\jre6\bin\server\jvm.dll</pre></li>
 --useNio               Use NIO Connector else use Socket Connector.
 --httpPort             HTTP port for to serve. (port &lt;= 0 will disable this connector)
 --httpsPort            HTTPS port to serve.  (port &lt;= 0 will disable this connector)
+--ajpPort              AJP port to serve.  (port &lt;= 0 will disable this connector)
 --storePassword        Password for SSL (https) keystore.
 --shutdownPort         Port for Shutdown Monitor to listen on. (port &lt;= 0 will disable this monitor)
 --tempFolder           Folder for server to extract built-in webapp
@@ -186,6 +179,77 @@ C:\Program Files\Java\jre6\bin\server\jvm.dll</pre></li>
 
 <pre><code>java -jar gitblit.jar --userService c:\myrealm.config --storePassword something
 </code></pre>
+
+<h4> Overriding Gitblit GO's Log4j Configuration</h4>
+
+<p>You can override Gitblit GO's default Log4j configuration with a command-line parameter to the JVM.</p>
+
+<pre><code>java -Dlog4j.configuration=file:///home/james/log4j.properties -jar gitblit.jar &lt;optional_gitblit_args&gt;
+</code></pre>
+
+<p>For reference, here is <a href="https://github.com/gitblit/gitblit/blob/master/src/log4j.properties">Gitblit's default Log4j configuration</a>.  It includes some file appenders that are disabled by default. </p>
+
+<h2> Running Gitblit behind Apache</h2>
+
+<p>Gitblit runs fine behind Apache.  You may use either <em>mod_proxy</em> (GO or WAR) or <em>mod_proxy_ajp</em> (GO).</p>
+
+<p>Each Linux distribution may vary on the exact configuration of Apache 2.2.<br/>
+Here is a sample configuration that works on Debian 7.0 (Wheezy), your distribution may be different.</p>
+
+<ol>
+<li>First we need to make sure we have Apache's proxy modules available.<br/>
+<pre>
+sudo su
+cd /etc/apache2/mods-enabled
+ln -s ../mods-available/proxy.load proxy.load
+ln -s ../mods-available/proxy_balancer.load proxy_balancer.load
+ln -s ../mods-available/proxy_http.load proxy_http.load
+ln -s ../mods-available/proxy_ajp.load proxy_ajp.load
+</pre></li>
+<li>Then we need to make sure we are configuring Apache to use the proxy modules and to setup the proxied connection from Apache to Gitblit GO or from Apache to your chosen servlet container.  The following snippet is stored as <code>/etc/apache2/conf.d/gitblit</code>.<br/>
+<pre class='prettyprint lang-java'>
+# Turn off support for true Proxy behaviour as we are acting as 
+# a transparent proxy
+ProxyRequests Off
+
+# Turn off VIA header as we know where the requests are proxied
+ProxyVia Off
+ 
+# Turn on Host header preservation so that the servlet container
+# can write links with the correct host and rewriting can be avoided.
+#
+# This is important for all git push/pull/clone operations.
+ProxyPreserveHost On
+ 
+# Set the permissions for the proxy
+&lt;Proxy *&gt;
+	AddDefaultCharset off
+	Order deny,allow
+	Allow from all
+&lt;/Proxy&gt;
+ 
+# The proxy context path must match the Gitblit context path.
+# For Gitblit GO, see server.contextPath in gitblit.properties.
+
+#ProxyPass /gitblit http://localhost:8080/gitblit
+#ProxyPassreverse /gitblit http://localhost:8080/gitblit
+
+# If your httpd frontend is https but you are proxying http Gitblit WAR or GO
+#Header edit Location &#94;http://([&#94;&#8260;]+)/gitblit/ https://&#36;1/gitblit/
+
+#ProxyPass /gitblit ajp://localhost:8009/gitblit
+</pre><br/>
+<strong>Please</strong> make sure to:<ol>
+<li>Review the security of these settings as appropriate for your deployment</li>
+<li>Uncomment the <em>ProxyPass</em> setting for whichever connection you prefer (http/ajp)</li>
+<li>Correctly set the ports and context paths both in the <em>ProxyPass</em> definition and your Gitblit installation<br/>
+If you are using Gitblit GO you can easily configure the AJP connector by specifying a non-zero AJP port.<br/>
+Please remember that on Linux/UNIX, ports &lt; 1024 require root permissions to open.</li>
+<li>Set <em>web.mountParameters=false</em> in <code>gitblit.properties</code> or <code>web.xml</code> this will use parameterized URLs.<br/>
+Alternatively, you can respecify <em>web.forwardSlashCharacter</em>.</li>
+</ol>
+</li>
+</ol>
 
 <h2> Upgrading Gitblit</h2>
 
@@ -425,6 +489,68 @@ You may specify <em>sendmail</em> in one of three places:</p>
 <p><strong>NOTE:</strong><br/>
 Care should be taken when devising your notification scheme as it relates to any VIEW restricted repositories you might have.  Setting a global mailing list and activating push notifications for a VIEW restricted repository may send unwanted emails.</p>
 
+<h2> Lucene Search Integration</h2>
+
+<p><em>SINCE 0.9.0</em></p>
+
+<p>Repositories may optionally be indexed using the Lucene search engine.  The Lucene search offers several advantages over commit-traversal search:</p>
+
+<ol>
+<li>very fast commit and blob searches</li>
+<li>multi-term searches</li>
+<li>term-highlighted and syntax-highlighted fragment matches</li>
+<li>multi-repository searches</li>
+</ol>
+
+<h3> How do I use it?</h3>
+
+<p>First you must ensure that <em>web.allowLuceneIndexing</em> is set <em>true</em> in <code>gitblit.properties</code> or <code>web.xml</code>.  Then you must understand that Lucene indexing is an opt-in feature which means that no repositories are automatically indexed.<br/>
+Like anything else, this design has pros and cons.</p>
+
+<h4> Pros</h4>
+
+<ol>
+<li>no wasted cycles indexing repositories you will never search</li>
+<li>you specify exactly what branches are indexed; experimental/dead/personal branches can be ignored</li>
+</ol>
+
+<h4> Cons</h4>
+
+<ol>
+<li>you specify exactly what branches are indexed</li>
+</ol>
+
+<h4> I have 300 repositories and you want me to specify indexed branches on each one??</h4>
+
+<p>Yeah, I agree that is inconvenient.</p>
+
+<p>If you are using Gitblit GO there is a utility script <code>add-indexed-branch.cmd</code> which allows you to specify an indexed branch for many repositories in one step.</p>
+
+<p>If you are using Gitblit WAR then, at present, you are out of luck unless you write your own script to traverse your repositories and use native Git to manipulate each repository config.</p>
+
+<pre><code>git config --add gitblit.indexBranch &quot;default&quot;
+git config --add gitblit.indexBranch &quot;refs/heads/master&quot;
+</code></pre>
+
+<h4> Indexing Branches</h4>
+
+<p>You may specify which branches should be indexed per-repository in the <em>Edit Repository</em> page.  New/empty repositories may only specify the <em>default</em> branch which will resolve to whatever commit HEAD points to or the most recently updated branch if HEAD is unresolvable.</p>
+
+<p>Indexes are built and incrementally updated on a 2 minute cycle so you may have to wait a few minutes before your index is built or before your latest pushes get indexed.</p>
+
+<p><strong>NOTE:</strong><br/>
+After specifying branches, only the content from those branches can be searched via Gitblit.  Gitblit will automatically redirect any queries entered on a repository's search box to the Lucene search page. Repositories that do not specify any indexed branches will use the traditional commit-traversal search.</p>
+
+<h4> Adequate Heap</h4>
+
+<p>The initial indexing of an existing repository can potentially exhaust the memory allocated to your Java instance and may throw OutOfMemory exceptions.  Be sure to provide your Gitblit server adequate heap space to index your repositories.  The heap is set using the <em>-Xmx</em> JVM parameter in your Gitblit launch command (e.g. -Xmx1024M).</p>
+
+<h4> Why does Gitblit check every 2 mins for repository/branch changes?</h4>
+
+<p>Gitblit has to balance its design as a complete, integrated Git server and its utility as a repository viewer in an existing Git setup.</p>
+
+<p>Gitblit could build indexes immediately on <em>edit repository</em> or on <em>receiving pushes</em>, but that design would not work if someone is pushing via ssh://, git://, or file:// (i.e. not pushing to Gitblit http(s)://).  For this reason Gitblit has a polling mechanism to check for ref changes every 2 mins.  This design works well for all use cases, aside from adding a little lag in updating the index.</p>
+
 <h2> Client Setup and Configuration</h2>
 
 <h3> Https with Self-Signed Certificates</h3>
@@ -457,12 +583,11 @@ Nothing special to configure, EGit figures out everything.
 <li><strong>Command-line Git</strong><br/>
 My testing indicates that your username must be embedded in the url.  YMMV.<br/>
 <pre>https://username@yourserver/git/your/repository</pre></li>
-</ul>			</div> <!-- markdown -->
-			<div style="margin-top:10px" class="page_footer">
-				<div style="float:right;">generated 2012-01-13</div>
-			The content of this page is licensed under the <a href="http://creativecommons.org/licenses/by/3.0">Creative Commons Attribution 3.0 License</a>.
-			</div>			
-		</div> <!-- content -->
+</ul>		</div> <!-- markdown -->
+		<footer>
+			<p class="pull-right">generated 2012-03-27</p>
+		The content of this page is licensed under the <a href="http://creativecommons.org/licenses/by/3.0">Creative Commons Attribution 3.0 License</a>.
+		</footer>			
 	</div> <!-- container -->	
 </body>
 </html>

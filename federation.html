@@ -2,29 +2,22 @@
 <html>
 	<head>
 		<title>Gitblit</title>
-		<link rel="stylesheet" type="text/css" href="./bootstrap.140.css"/>
-		<link rel="stylesheet" type="text/css" href="./bootstrap.gb.css"/>
-		<link rel="stylesheet" type="text/css" href="./markdown.css"/>
+		<link rel="stylesheet" href="./bootstrap/css/bootstrap.css"/>
+		<link rel="stylesheet" type="text/css" href="./gitblit.css"/>
 		<link rel="shortcut icon" type="image/png" href="./gitblt-favicon.png" />
 		<meta name="ROBOTS" content="INDEX">
 		<meta http-equiv="imagetoolbar" content="no" />
 		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 		<meta name="keywords" content="java git server" />
+
+		<script type="text/javascript" src="./bootstrap/js/jquery.js"></script>
+		<script type="text/javascript" src="./bootstrap/js/bootstrap.js"></script>
 		
-		<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.min.js"></script>
-		<script>
-			!window.jQuery && document.write(<script src="./fancybox/jquery-1.4.3.min.js"><\/script>);
-		</script>
 		<script type="text/javascript" src="./fancybox/query.mousewheel-3.0.4.pack.js"></script>
 		<script type="text/javascript" src="./fancybox/jquery.fancybox-1.3.4.pack.js"></script>
 		<link rel="stylesheet" type="text/css" href="./fancybox/jquery.fancybox-1.3.4.css" media="screen" />
 		
-		<script type="text/javascript" src="./screenshots.js"></script>
-		<style>
-			ul.noBullets {
-				list-style: none;
-			}
-		</style>
+		<script type="text/javascript" src="./screenshots.js"></script>		
 		
 		<script type="text/javascript" src="prettify/prettify.js"></script>
 		<link href="prettify/prettify.css" type="text/css" rel="stylesheet" />
@@ -49,9 +42,9 @@
 </script>
 
 	</head>
-	<body style="padding-top:40px;"  onload="prettyPrint()">
-		<div class="topbar">
-			<div class="fill">
+	<body onload="prettyPrint()">
+		<div class="navbar navbar-fixed-top">
+			<div class="navbar-inner">
 				<div class="container">
 					<a class="brand" href="http://gitblit.com" title="gitblit homepage">
 						<img src="gitblt_25_white.png" width="79" height="25" alt="gitblit" class="logo"/>
@@ -68,8 +61,7 @@
 			</div>
 		</div>
 		<div class="container">
-			<div class="content">
-				<div class="markdown">
+			<div class="markdown">
 <h2> Federating Gitblit</h2>
 
 <p><em>SINCE 0.6.0</em></p>
@@ -276,7 +268,7 @@ Please consider adding the <em>#notfederated</em> role to your admin account!</p
 
 <h2> Federation Pull Registration Keys</h2>
 
-<table>
+<table class="table">
 <tr><th>federation.N.url</th>
 <td>string</td>
 <td>the url of the origin Gitblit instance <em>(required)</em></td>
@@ -400,7 +392,7 @@ federation.example4.include = somerepo.git
 
 <h2> Federation Client</h2>
 
-<p>Instead of setting up a full-blown pulling Gitblit instance, you can also use the <a href="http://code.google.com/p/gitblit/downloads/detail?name=fedclient-0.8.2.zip">federation client</a> command-line utility.  This is a packaged subset of the federation feature in a smaller, simpler command-line only tool.</p>
+<p>Instead of setting up a full-blown pulling Gitblit instance, you can also use the <a href="http://code.google.com/p/gitblit/downloads/detail?name=fedclient-0.9.0.zip">federation client</a> command-line utility.  This is a packaged subset of the federation feature in a smaller, simpler command-line only tool.</p>
 
 <p>The <em>federation client</em> relies on many of the same dependencies as Gitblit and will download them on first execution.</p>
 
@@ -420,12 +412,11 @@ federation.example4.include = somerepo.git
 java -jar fedclient.jar --url https://go.gitblit.com --mirror --bare --token 123456789
      --repositoriesFolder c:/mymirror --daemon --frequency &quot;24 hours&quot;
 
-</code></pre>			</div> <!-- markdown -->
-			<div style="margin-top:10px" class="page_footer">
-				<div style="float:right;">generated 2012-01-13</div>
-			The content of this page is licensed under the <a href="http://creativecommons.org/licenses/by/3.0">Creative Commons Attribution 3.0 License</a>.
-			</div>			
-		</div> <!-- content -->
+</code></pre>		</div> <!-- markdown -->
+		<footer>
+			<p class="pull-right">generated 2012-03-27</p>
+		The content of this page is licensed under the <a href="http://creativecommons.org/licenses/by/3.0">Creative Commons Attribution 3.0 License</a>.
+		</footer>			
 	</div> <!-- container -->	
 </body>
 </html>
