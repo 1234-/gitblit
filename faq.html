@@ -243,7 +243,9 @@ SSH support requires creating, exchanging, and managing SSH keys (arguably not m
 
 <h3> What types of Search does Gitblit support?</h3>
 
-<p>Gitblit supports case-insensitive searches of <em>commit message</em> (default), <em>author</em>, and <em>committer</em>.<br/></p>
+<p>As of 0.9.0, Gitblit supports Lucene-based searching.</p>
+
+<p>If Lucene indexing is disabled, Gitblit falls back to brute-force commit-traversal search.  Commit-traversal search supports case-insensitive searching of <em>commit message</em> (default), <em>author</em>, and <em>committer</em>.<br/></p>
 
 <p>To search by <em>author</em> or <em>committer</em> use the following syntax in the search box:</p>
 
@@ -261,7 +263,7 @@ committer: james
 
 <p>Yes.  Most messages are localized to a standard Java properties file.		</div> <!-- markdown -->
 		<footer>
-			<p class="pull-right">generated 2012-04-11</p>
+			<p class="pull-right">generated 2012-07-14</p>
 		The content of this page is licensed under the <a href="http://creativecommons.org/licenses/by/3.0">Creative Commons Attribution 3.0 License</a>.
 		</footer>			
 	</div> <!-- container -->	

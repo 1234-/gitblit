@@ -103,6 +103,114 @@
 <span style="color:#004000;"># <i>SINCE 0.9.0</i></span><br/>
 <span style="color:#000080;">git.onlyAccessBareRepositories</span> = <span style="color:#800000;">false</span><br/>
 <br/>
+<span style="color:#004000;"># The default access restriction for new repositories.</span><br/>
+<span style="color:#004000;"># Valid values are NONE, PUSH, CLONE, VIEW</span><br/>
+<span style="color:#004000;"># NONE = anonymous view, clone, &amp; push</span><br/>
+<span style="color:#004000;"># PUSH = anonymous view &amp; clone and authenticated push</span><br/>
+<span style="color:#004000;"># CLONE = anonymous view, authenticated clone &amp; push</span><br/>
+<span style="color:#004000;"># VIEW = authenticated view, clone, &amp; push</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># <i>SINCE 1.0.0</i></span><br/>
+<span style="color:#000080;">git.defaultAccessRestriction</span> = <span style="color:#800000;">NONE</span><br/>
+<br/>
+<span style="color:#004000;"># Number of bytes of a pack file to load into memory in a single read operation.</span><br/>
+<span style="color:#004000;"># This is the &quot;page size&quot; of the JGit buffer cache, used for all pack access</span><br/>
+<span style="color:#004000;"># operations. All disk IO occurs as single window reads. Setting this too large</span><br/>
+<span style="color:#004000;"># may cause the process to load more data than is required; setting this too small</span><br/>
+<span style="color:#004000;"># may increase the frequency of read() system calls.</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># Default on JGit is 8 KiB on all platforms.</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># Common unit suffixes of k, m, or g are supported.</span><br/>
+<span style="color:#004000;"># Documentation courtesy of the Gerrit project.</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># <i>SINCE 1.0.0</i></span><br/>
+<span style="color:#004000;"># <i>RESTART REQUIRED</i></span><br/>
+<span style="color:#000080;">git.packedGitWindowSize</span> = <span style="color:#800000;">8k</span><br/>
+<br/>
+<span style="color:#004000;"># Maximum number of bytes to load and cache in memory from pack files. If JGit</span><br/>
+<span style="color:#004000;"># needs to access more than this many bytes it will unload less frequently used</span><br/>
+<span style="color:#004000;"># windows to reclaim memory space within the process. As this buffer must be shared</span><br/>
+<span style="color:#004000;"># with the rest of the JVM heap, it should be a fraction of the total memory available.</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># The JGit team recommends setting this value larger than the size of your biggest</span><br/>
+<span style="color:#004000;"># repository. This ensures you can serve most requests from memory.</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># Default on JGit is 10 MiB on all platforms.</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># Common unit suffixes of k, m, or g are supported.</span><br/>
+<span style="color:#004000;"># Documentation courtesy of the Gerrit project.</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># <i>SINCE 1.0.0</i></span><br/>
+<span style="color:#004000;"># <i>RESTART REQUIRED</i></span><br/>
+<span style="color:#000080;">git.packedGitLimit</span> = <span style="color:#800000;">10m</span><br/>
+<br/>
+<span style="color:#004000;"># Maximum number of bytes to reserve for caching base objects that multiple deltafied</span><br/>
+<span style="color:#004000;"># objects reference. By storing the entire decompressed base object in a cache Git</span><br/>
+<span style="color:#004000;"># is able to avoid unpacking and decompressing frequently used base objects multiple times.</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># Default on JGit is 10 MiB on all platforms. You probably do not need to adjust</span><br/>
+<span style="color:#004000;"># this value.</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># Common unit suffixes of k, m, or g are supported.</span><br/>
+<span style="color:#004000;"># Documentation courtesy of the Gerrit project.</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># <i>SINCE 1.0.0</i></span><br/>
+<span style="color:#004000;"># <i>RESTART REQUIRED</i></span><br/>
+<span style="color:#000080;">git.deltaBaseCacheLimit</span> = <span style="color:#800000;">10m</span><br/>
+<br/>
+<span style="color:#004000;"># Maximum number of pack files to have open at once. A pack file must be opened</span><br/>
+<span style="color:#004000;"># in order for any of its data to be available in a cached window.</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># If you increase this to a larger setting you may need to also adjust the ulimit</span><br/>
+<span style="color:#004000;"># on file descriptors for the host JVM, as Gitblit needs additional file descriptors</span><br/>
+<span style="color:#004000;"># available for network sockets and other repository data manipulation.</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># Default on JGit is 128 file descriptors on all platforms.</span><br/>
+<span style="color:#004000;"># Documentation courtesy of the Gerrit project.</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># <i>SINCE 1.0.0</i></span><br/>
+<span style="color:#004000;"># <i>RESTART REQUIRED</i></span><br/>
+<span style="color:#000080;">git.packedGitOpenFiles</span> = <span style="color:#800000;">128</span><br/>
+<br/>
+<span style="color:#004000;"># Largest object size, in bytes, that JGit will allocate as a contiguous byte</span><br/>
+<span style="color:#004000;"># array. Any file revision larger than this threshold will have to be streamed,</span><br/>
+<span style="color:#004000;"># typically requiring the use of temporary files under $GIT_DIR/objects to implement</span><br/>
+<span style="color:#004000;"># psuedo-random access during delta decompression.</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># Servers with very high traffic should set this to be larger than the size of</span><br/>
+<span style="color:#004000;"># their common big files. For example a server managing the Android platform</span><br/>
+<span style="color:#004000;"># typically has to deal with ~10-12 MiB XML files, so 15 m would be a reasonable</span><br/>
+<span style="color:#004000;"># setting in that environment. Setting this too high may cause the JVM to run out</span><br/>
+<span style="color:#004000;"># of heap space when handling very big binary files, such as device firmware or</span><br/>
+<span style="color:#004000;"># CD-ROM ISO images. Make sure to adjust your JVM heap accordingly.</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># Default is 50 MiB on all platforms.</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># Common unit suffixes of k, m, or g are supported.</span><br/>
+<span style="color:#004000;"># Documentation courtesy of the Gerrit project.</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># <i>SINCE 1.0.0</i></span><br/>
+<span style="color:#004000;"># <i>RESTART REQUIRED</i></span><br/>
+<span style="color:#000080;">git.streamFileThreshold</span> = <span style="color:#800000;">50m</span><br/>
+<br/>
+<span style="color:#004000;"># When true, JGit will use mmap() rather than malloc()+read() to load data from</span><br/>
+<span style="color:#004000;"># pack files.  The use of mmap can be problematic on some JVMs as the garbage</span><br/>
+<span style="color:#004000;"># collector must deduce that a memory mapped segment is no longer in use before</span><br/>
+<span style="color:#004000;"># a call to munmap() can be made by the JVM native code.</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># In server applications (such as Gitblit) that need to access many pack files,</span><br/>
+<span style="color:#004000;"># setting this to true risks artificially running out of virtual address space,</span><br/>
+<span style="color:#004000;"># as the garbage collector cannot reclaim unused mapped spaces fast enough.</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># Default on JGit is false. Although potentially slower, it yields much more</span><br/>
+<span style="color:#004000;"># predictable behavior.</span><br/>
+<span style="color:#004000;"># Documentation courtesy of the Gerrit project.</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># <i>SINCE 1.0.0</i></span><br/>
+<span style="color:#004000;"># <i>RESTART REQUIRED</i></span><br/>
+<span style="color:#000080;">git.packedGitMmap</span> = <span style="color:#800000;">false</span><br/>
+<br/>
 <span style="color:#004000;"># </span><br/>
 <span style="color:#004000;"># Groovy Integration</span><br/>
 <span style="color:#004000;"># </span><br/>
@@ -114,6 +222,13 @@
 <span style="color:#004000;"># <i>RESTART REQUIRED</i></span><br/>
 <span style="color:#004000;"># <i>SINCE 0.8.0</i></span><br/>
 <span style="color:#000080;">groovy.scriptsFolder</span> = <span style="color:#800000;">groovy</span><br/>
+<br/>
+<span style="color:#004000;"># Specify the directory Grape uses for downloading libraries.</span><br/>
+<span style="color:#004000;"># http://groovy.codehaus.org/Grape</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># <i>RESTART REQUIRED</i></span><br/>
+<span style="color:#004000;"># <i>SINCE 1.0.0</i></span><br/>
+<span style="color:#000080;">groovy.grapeFolder</span> = <span style="color:#800000;">groovy/grape</span><br/>
 <br/>
 <span style="color:#004000;"># Scripts to execute on Pre-Receive.</span><br/>
 <span style="color:#004000;"># </span><br/>
@@ -157,6 +272,21 @@
 <span style="color:#004000;"># <i>SINCE 0.8.0</i></span><br/>
 <span style="color:#000080;">groovy.postReceiveScripts</span> = <span style="color:#800000;"></span><br/>
 <br/>
+<span style="color:#004000;"># Repository custom fields for Groovy Hook mechanism</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># List of key=label pairs of custom fields to prompt for in the Edit Repository</span><br/>
+<span style="color:#004000;"># page.  These keys are stored in the repository's git config file in the</span><br/>
+<span style="color:#004000;"># section [gitblit &quot;customFields&quot;].  Key names are alphanumeric only.  These</span><br/>
+<span style="color:#004000;"># fields are intended to be used for the Groovy hook mechanism where a script</span><br/>
+<span style="color:#004000;"># can adjust it's execution based on the custom fields stored in the repository</span><br/>
+<span style="color:#004000;"># config.</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># e.g. &quot;commitMsgRegex=Commit Message Regular Expression&quot; anotherProperty=Another</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># <i>SPACE-DELIMITED</i></span><br/>
+<span style="color:#004000;"># <i>SINCE 1.0.0</i></span><br/>
+<span style="color:#000080;">groovy.customFields</span> = <span style="color:#800000;"></span><br/>
+<br/>
 <span style="color:#004000;"># </span><br/>
 <span style="color:#004000;"># Authentication Settings</span><br/>
 <span style="color:#004000;"># </span><br/>
@@ -182,7 +312,11 @@
 <span style="color:#004000;"># Either the full path to a user config file (users.conf)</span><br/>
 <span style="color:#004000;"># OR the full path to a simple user properties file (users.properties)</span><br/>
 <span style="color:#004000;"># OR a fully qualified class name that implements the IUserService interface.</span><br/>
-<span style="color:#004000;"># Any custom implementation must have a public default constructor.</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># Alternative user services:</span><br/>
+<span style="color:#004000;"># com.gitblit.LdapUserService</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># Any custom user service implementation must have a public default constructor.</span><br/>
 <span style="color:#004000;"># </span><br/>
 <span style="color:#004000;"># <i>SINCE 0.5.0</i></span><br/>
 <span style="color:#004000;"># <i>RESTART REQUIRED</i></span><br/>
@@ -239,6 +373,20 @@
 <span style="color:#004000;"># </span><br/>
 <span style="color:#004000;"># <i>SINCE 0.7.0</i></span><br/>
 <span style="color:#000080;">web.enableRpcAdministration</span> = <span style="color:#800000;">false</span><br/>
+<br/>
+<span style="color:#004000;"># Full path to a configurable robots.txt file.  With this file you can control</span><br/>
+<span style="color:#004000;"># what parts of your Gitblit server respectable robots are allowed to traverse.</span><br/>
+<span style="color:#004000;"># http://googlewebmastercentral.blogspot.com/2008/06/improving-on-robots-exclusion-protocol.html</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># <i>SINCE 1.0.0</i></span><br/>
+<span style="color:#000080;">web.robots.txt</span> = <span style="color:#800000;"></span><br/>
+<br/>
+<span style="color:#004000;"># If true, the web ui layout will respond and adapt to the browser's dimensions.</span><br/>
+<span style="color:#004000;"># if false, the web ui will use a 940px fixed-width layout.</span><br/>
+<span style="color:#004000;"># http://twitter.github.com/bootstrap/scaffolding.html#responsive</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># <i>SINCE 1.0.0</i></span><br/>
+<span style="color:#000080;">web.useResponsiveLayout</span> = <span style="color:#800000;">true</span><br/>
 <br/>
 <span style="color:#004000;"># Allow Gravatar images to be displayed in Gitblit pages.</span><br/>
 <span style="color:#004000;"># </span><br/>
@@ -306,6 +454,16 @@
 <span style="color:#004000;"># </span><br/>
 <span style="color:#004000;"># <i>SINCE 0.5.0</i></span><br/>
 <span style="color:#000080;">web.repositoriesMessage</span> = <span style="color:#800000;">gitblit</span><br/>
+<br/>
+<span style="color:#004000;"># Ordered list of charsets/encodings to use when trying to display a blob.</span><br/>
+<span style="color:#004000;"># If empty, UTF-8 and ISO-8859-1 are used.  The server's default charset</span><br/>
+<span style="color:#004000;"># is always appended to the encoding list.  If all encodings fail to cleanly</span><br/>
+<span style="color:#004000;"># decode the blob content, UTF-8 will be used with the standard malformed</span><br/>
+<span style="color:#004000;"># input/unmappable character replacement strings.</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># <i>SPACE-DELIMITED</i></span><br/>
+<span style="color:#004000;"># <i>SINCE 1.0.0</i></span><br/>
+<span style="color:#000080;">web.blobEncodings</span> = <span style="color:#800000;">UTF-8 ISO-8859-1</span><br/>
 <br/>
 <span style="color:#004000;"># Manually set the default timezone to be used by Gitblit for display in the</span><br/>
 <span style="color:#004000;"># web ui.  This value is independent of the JVM timezone.  Specifying a blank</span><br/>
@@ -377,6 +535,7 @@
 <span style="color:#004000;"># e.g.</span><br/>
 <span style="color:#004000;"># web.otherUrls = ssh://localhost/git/{0} git://localhost/git/{0}</span><br/>
 <span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># <i>SPACE-DELIMITED</i></span><br/>
 <span style="color:#004000;"># <i>SINCE 0.5.0</i></span><br/>
 <span style="color:#000080;">web.otherUrls</span> = <span style="color:#800000;"></span><br/>
 <br/>
@@ -676,6 +835,125 @@
 <span style="color:#004000;"># federation.example1.mergeAccounts = true</span><br/>
 <br/>
 <span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># Advanced Realm Settings</span><br/>
+<span style="color:#004000;"># </span><br/>
+<br/>
+<span style="color:#004000;"># URL of the LDAP server.</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># <i>SINCE 1.0.0</i></span><br/>
+<span style="color:#000080;">realm.ldap.server</span> = <span style="color:#800000;">ldap://localhost</span><br/>
+<br/>
+<span style="color:#004000;"># Login username for LDAP searches.</span><br/>
+<span style="color:#004000;"># If this value is unspecified, anonymous LDAP login will be used.</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># e.g. mydomain\username</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># <i>SINCE 1.0.0</i></span><br/>
+<span style="color:#000080;">realm.ldap.username</span> = <span style="color:#800000;">cn=Directory Manager</span><br/>
+<br/>
+<span style="color:#004000;"># Login password for LDAP searches.</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># <i>SINCE 1.0.0</i></span><br/>
+<span style="color:#000080;">realm.ldap.password</span> = <span style="color:#800000;">password</span><br/>
+<br/>
+<span style="color:#004000;"># The LdapUserService must be backed by another user service for standard user</span><br/>
+<span style="color:#004000;"># and team management.</span><br/>
+<span style="color:#004000;"># default: users.conf</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># <i>SINCE 1.0.0</i></span><br/>
+<span style="color:#004000;"># <i>RESTART REQUIRED</i></span><br/>
+<span style="color:#000080;">realm.ldap.backingUserService</span> = <span style="color:#800000;">users.conf</span><br/>
+<br/>
+<span style="color:#004000;"># Delegate team membership control to LDAP.</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># If true, team user memberships will be specified by LDAP groups.  This will</span><br/>
+<span style="color:#004000;"># disable team selection in Edit User and user selection in Edit Team.</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># If false, LDAP will only be used for authentication and Gitblit will maintain</span><br/>
+<span style="color:#004000;"># team memberships with the <em>realm.ldap.backingUserService</em>.</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># <i>SINCE 1.0.0</i></span><br/>
+<span style="color:#000080;">realm.ldap.maintainTeams</span> = <span style="color:#800000;">false</span><br/>
+<br/>
+<span style="color:#004000;"># Root node for all LDAP users</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># This is the root node from which subtree user searches will begin.</span><br/>
+<span style="color:#004000;"># If blank, Gitblit will search ALL nodes.</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># <i>SINCE 1.0.0</i></span><br/>
+<span style="color:#000080;">realm.ldap.accountBase</span> = <span style="color:#800000;">OU=Users,OU=UserControl,OU=MyOrganization,DC=MyDomain</span><br/>
+<br/>
+<span style="color:#004000;"># Filter criteria for LDAP users</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># Query pattern to use when searching for a user account. This may be any valid</span><br/>
+<span style="color:#004000;"># LDAP query expression, including the standard (&amp;) and (|) operators.</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># Variables may be injected via the ${variableName} syntax.</span><br/>
+<span style="color:#004000;"># Recognized variables are:</span><br/>
+<span style="color:#004000;"># ${username} - The text entered as the user name</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># <i>SINCE 1.0.0</i></span><br/>
+<span style="color:#000080;">realm.ldap.accountPattern</span> = <span style="color:#800000;">(&amp;(objectClass=person)(sAMAccountName=${username}))</span><br/>
+<br/>
+<span style="color:#004000;"># Root node for all LDAP groups to be used as Gitblit Teams</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># This is the root node from which subtree team searches will begin.</span><br/>
+<span style="color:#004000;"># If blank, Gitblit will search ALL nodes.</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># <i>SINCE 1.0.0</i></span><br/>
+<span style="color:#000080;">realm.ldap.groupBase</span> = <span style="color:#800000;">OU=Groups,OU=UserControl,OU=MyOrganization,DC=MyDomain</span><br/>
+<br/>
+<span style="color:#004000;"># Filter criteria for LDAP groups</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># Query pattern to use when searching for a team. This may be any valid</span><br/>
+<span style="color:#004000;"># LDAP query expression, including the standard (&amp;) and (|) operators.</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># Variables may be injected via the ${variableName} syntax.</span><br/>
+<span style="color:#004000;"># Recognized variables are:</span><br/>
+<span style="color:#004000;"># ${username} - The text entered as the user name</span><br/>
+<span style="color:#004000;"># ${dn} - The Distinguished Name of the user logged in</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># All attributes from the LDAP User record are available. For example, if a user</span><br/>
+<span style="color:#004000;"># has an attribute &quot;fullName&quot; set to &quot;John&quot;, &quot;(fn=${fullName})&quot; will be</span><br/>
+<span style="color:#004000;"># translated to &quot;(fn=John)&quot;.</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># <i>SINCE 1.0.0</i></span><br/>
+<span style="color:#000080;">realm.ldap.groupMemberPattern</span> = <span style="color:#800000;">(&amp;(objectClass=group)(member=${dn}))</span><br/>
+<br/>
+<span style="color:#004000;"># LDAP users or groups that should be given administrator privileges.</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># Teams are specified with a leading '@' character.  Groups with spaces in the</span><br/>
+<span style="color:#004000;"># name can be entered as &quot;@team name&quot;.</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># e.g. realm.ldap.admins = john @git_admins &quot;@git admins&quot;</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># <i>SPACE-DELIMITED</i></span><br/>
+<span style="color:#004000;"># <i>SINCE 1.0.0</i></span><br/>
+<span style="color:#000080;">realm.ldap.admins</span> = <span style="color:#800000;">@Git_Admins</span><br/>
+<br/>
+<span style="color:#004000;"># Attribute(s) on the USER record that indicate their display (or full) name.</span><br/>
+<span style="color:#004000;"># Leave blank for no mapping available in LDAP.</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># This may be a single attribute, or a string of multiple attributes.  Examples:</span><br/>
+<span style="color:#004000;"># displayName - Uses the attribute 'displayName' on the user record</span><br/>
+<span style="color:#004000;"># ${personalTitle}. ${givenName} ${surname} - Will concatenate the 3</span><br/>
+<span style="color:#004000;"># attributes together, with a '.' after personalTitle</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># <i>SINCE 1.0.0</i></span><br/>
+<span style="color:#000080;">realm.ldap.displayName</span> = <span style="color:#800000;">displayName</span><br/>
+<br/>
+<span style="color:#004000;"># Attribute(s) on the USER record that indicate their email address.</span><br/>
+<span style="color:#004000;"># Leave blank for no mapping available in LDAP.</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># This may be a single attribute, or a string of multiple attributes.  Examples:</span><br/>
+<span style="color:#004000;"># email - Uses the attribute 'email' on the user record</span><br/>
+<span style="color:#004000;"># ${givenName}.${surname}@gitblit.com -Will concatenate the 2 attributes</span><br/>
+<span style="color:#004000;"># together with a '.' and '@' creating something like first.last@gitblit.com</span><br/>
+<span style="color:#004000;"># </span><br/>
+<span style="color:#004000;"># <i>SINCE 1.0.0</i></span><br/>
+<span style="color:#000080;">realm.ldap.email</span> = <span style="color:#800000;">email</span><br/>
+<br/>
+<span style="color:#004000;"># </span><br/>
 <span style="color:#004000;"># Server Settings</span><br/>
 <span style="color:#004000;"># </span><br/>
 <br/>
@@ -765,7 +1043,7 @@
 <span style="color:#000080;">server.shutdownPort</span> = <span style="color:#800000;">8081</span><br/>
 		</div> <!-- markdown -->
 		<footer>
-			<p class="pull-right">generated 2012-04-11</p>
+			<p class="pull-right">generated 2012-07-14</p>
 		The content of this page is licensed under the <a href="http://creativecommons.org/licenses/by/3.0">Creative Commons Attribution 3.0 License</a>.
 		</footer>			
 	</div> <!-- container -->	

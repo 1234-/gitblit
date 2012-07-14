@@ -65,7 +65,7 @@
 <h2> Gitblit WAR Setup</h2>
 
 <ol>
-<li>Download <a href="http://code.google.com/p/gitblit/downloads/detail?name=gitblit-0.9.3.war">Gitblit WAR 0.9.3</a> to the webapps folder of your servlet container.</li>
+<li>Download <a href="http://code.google.com/p/gitblit/downloads/detail?name=gitblit-1.0.0.war">Gitblit WAR 1.0.0</a> to the webapps folder of your servlet container.</li>
 <li>You may have to manually extract the WAR (zip file) to a folder within your webapps folder.</li>
 <li>Copy the <code>WEB-INF/users.conf</code> file to a location outside the webapps folder that is accessible by your servlet container.<br/>
 Optionally copy the example hook scripts in <code>WEB-INF/groovy</code> to a location outside the webapps folder that is accesible by your servlet container.</li>
@@ -73,7 +73,10 @@ Optionally copy the example hook scripts in <code>WEB-INF/groovy</code> to a loc
 Open <code>web.xml</code> in your favorite text editor and make sure to review and set:<ul>
 <li>&lt;context-parameter&gt; <em>git.repositoryFolder</em> (set the full path to your repositories folder)</li>
 <li>&lt;context-parameter&gt; <em>groovy.scriptsFolder</em> (set the full path to your Groovy hook scripts folder)</li>
+<li>&lt;context-parameter&gt; <em>groovy.grapeFolder</em> (set the full path to your Groovy Grape artifact cache)</li>
 <li>&lt;context-parameter&gt; <em>realm.userService</em> (set the full path to <code>users.conf</code>)</li>
+<li>&lt;context-parameter&gt; <em>git.packedGitLimit</em> (set larger than the size of your largest repository)</li>
+<li>&lt;context-parameter&gt; <em>git.streamFileThreshold</em> (set larger than the size of your largest committed file)</li>
 </ul>
 </li>
 <li>You may have to restart your servlet container. </li>
@@ -85,16 +88,19 @@ Open <code>web.xml</code> in your favorite text editor and make sure to review a
 <h2> Gitblit GO Setup</h2>
 
 <ol>
-<li>Download and unzip <a href="http://code.google.com/p/gitblit/downloads/detail?name=gitblit-0.9.3.zip">Gitblit GO 0.9.3</a>.<br/>
+<li>Download and unzip <a href="http://code.google.com/p/gitblit/downloads/detail?name=gitblit-1.0.0.zip">Gitblit GO 1.0.0</a>.<br/>
 <em>Its best to eliminate spaces in the path name.</em> </li>
 <li>The server itself is configured through a simple text file.<br/>
 Open <code>gitblit.properties</code> in your favorite text editor and make sure to review and set:<ul>
 <li><em>git.repositoryFolder</em> (path may be relative or absolute)</li>
 <li><em>groovy.scriptsFolder</em> (path may be relative or absolute)</li>
+<li><em>groovy.grapeFolder</em> (path may be relative or absolute)</li>
 <li><em>server.tempFolder</em> (path may be relative or absolute)</li>
 <li><em>server.httpPort</em> and <em>server.httpsPort</em></li>
 <li><em>server.httpBindInterface</em> and <em>server.httpsBindInterface</em><br/>
 <strong>https</strong> is strongly recommended because passwords are insecurely transmitted form your browser/git client using Basic authentication!</li>
+<li><em>git.packedGitLimit</em> (set larger than the size of your largest repository)</li>
+<li><em>git.streamFileThreshold</em> (set larger than the size of your largest committed file)</li>
 </ul>
 </li>
 <li>Execute <code>gitblit.cmd</code> or <code>java -jar gitblit.jar</code> from a command-line</li>
@@ -393,9 +399,77 @@ Whitespace is illegal.</p>
 
 <p>There are two actual <em>roles</em> in Gitblit: <em>#admin</em>, which grants administrative powers to that user, and <em>#notfederated</em>, which prevents an account from being pulled by another Gitblit instance.  Administrators automatically have access to all repositories.  All other <em>roles</em> are repository names.  If a repository is access-restricted, the user must have the repository's name within his/her roles to bypass the access restriction.  This is how users are granted access to a restricted repository.</p>
 
-<h2> Authentication and Authorization Customization</h2>
+<h2> Alternative Authentication and Authorization</h2>
 
-<h3> Customize Authentication Only</h3>
+<h3> LDAP Authentication</h3>
+
+<p><em>SINCE 1.0.0</em></p>
+
+<p>LDAP can be used to authenticate Users and optionally control Team memberships.  When properly configured, Gitblit will delegate authentication to your LDAP server and will cache some user information in the usual users file (.conf or .properties).</p>
+
+<p>When using the LDAP User Service, new user accounts can not be manually created from Gitblit.  Gitblit user accounts are automatically created for new users on their first succesful authentication through Gitblit against the LDAP server.  It is also important to note that the LDAP User Service does not retrieve or store user passwords nor does it implement any LDAP-write functionality.</p>
+
+<p>To use the <em>LdapUserService</em> set <em>realm.userService=com.gitblit.LdapUserService</em> in your <code>gitblit.properties</code> file or your <code>web.xml</code> file and then configure the <em>realm.ldap</em> settings appropriately for your LDAP environment.</p>
+
+<h4> Example LDAP Layout</h4>
+
+<p><img src="ldapSample.png" alt="block diagram" title="LDAP Sample"/></p>
+
+<p>Please see <a href="https://github.com/gitblit/gitblit/blob/master/tests/com/gitblit/tests/resources/ldapUserServiceSampleData.ldif">ldapUserServiceSampleData.ldif</a> to see the data in LDAP that reflects the above picture.</p>
+
+<h4> Gitblit Settings for Example LDAP Layout</h4>
+
+<p>The following are the settings required to configure Gitblit to authenticate against the example LDAP server with LDAP-controlled team memberships.</p>
+
+<table class="table">
+<thead>
+<tr><th>parameter</th><th>value</th><th>description</th></tr>
+</thead>
+<tbody>
+<tr>
+  <th>realm.ldap.server</th><td>ldap://localhost:389</td>
+  <td>Tells Gitblit to connect to the LDAP server on localhost port 389.  The URL Must be of form ldap(s)://&lt;server&gt;:&lt;port&gt; with port being optional (389 for ldap, 636 for ldaps).</td>
+</tr>
+<tr>
+  <th>realm.ldap.username</th><td>cn=Directory Manager</td>
+  <td>The credentials that will log into the LDAP server</td>
+</tr>
+<tr>
+  <th>realm.ldap.password</th><td>password</td>
+  <td>The credentials that will log into the LDAP server</td>
+</tr>
+<tr>
+  <th>realm.ldap.backingUserService</th><td>users.conf</td>
+  <td>Where to store all information that is used by Gitblit.  All information will be synced here upon user login.</td>
+</tr>
+<tr>
+  <th>realm.ldap.maintainTeams</th><td>true</td>
+  <td>Are team memberships maintained in LDAP (<em>true</em>) or manually in Gitblit (<em>false</em>).</td>
+</tr>
+<tr>
+  <th>realm.ldap.accountBase</th><td>OU=Users,OU=UserControl,OU=MyOrganization,DC=MyDomain</td>
+  <td>What is the root node for all users in this LDAP system.  Subtree searches will start from this node.</td>
+</tr>
+<tr>
+  <th>realm.ldap.accountPattern</th><td>(&(objectClass=person)(sAMAccountName=${username}))</td><td>The LDAP search filter that will match a particular user in LDAP.  ${username} will be replaced with whatever the user enters as their username in the Gitblit login panel.</td>
+</tr>
+<tr>
+  <th>realm.ldap.groupBase</th><td>OU=Groups,OU=UserControl,OU=MyOrganization,DC=MyDomain</td>
+  <td>What is the root node for all teams in this LDAP system.  Subtree searches will start from this node.</td>
+</tr>
+<tr>
+  <th>realm.ldap.groupMemberPattern</th><td>(&(objectClass=group)(member=${dn}))</td><td>The LDAP search filter that will match all teams for the authenticating user.  ${username} will be replaced with whatever the user enters as their username in the Gitblit login panel.  Anything else in ${} will be replaced by Attributes from the User node.</td>
+</tr>
+<tr>
+  <th>realm.ldap.admins</th><td>@Git_Admins</td><td>A space-delimited list of usernames and/or teams that indicate admin status in Gitblit.  Teams are referenced with a leading <em>@</em> character.</td>
+</tr>
+</tbody>
+</table>
+<h4> LDAP In-Memory Server</h4>
+
+<p>You can start Gitblit GO with an in-memory LDAP server by specifying the <em>--ldapLdifFile</em> command-line argument.  The LDAP server will listen on localhost of the port specified in <em>realm.ldap.url</em> of <code>gitblit.properties</code>.  Additionally, a root user record is automatically created for <em>realm.ldap.username</em> and <em>realm.ldap.password</em>.  Please note that the ldaps:// protocol is not supported for the in-memory server.</p>
+
+<h3> Custom Authentication</h3>
 
 <p>This is the simplest choice where you implement custom authentication and delegate all other standard user and team operations to one of Gitblit's user service implementations.  This choice insulates your customization from changes in User and Team model classes and additional API that may be added to IUserService.</p>
 
@@ -406,7 +480,7 @@ Make sure to set the <em>serviceImpl</em> field in your <em>setup()</em> method.
 
 <p>Your subclass must be on Gitblit's classpath and must have a public default constructor.</p>
 
-<h3> Customize Everything</h3>
+<h3> Custom Everything</h3>
 
 <p>Instead of maintaining a <code>users.conf</code> or <code>users.properties</code> file, you may want to integrate Gitblit into an existing environment.</p>
 
@@ -444,6 +518,37 @@ You may execute the same script on pre-receive and post-receive, just not multip
 <p>Some sample scripts are included in the GO and WAR distributions to show you how you can tap into Gitblit with the provided bound variables.  Additional implementation details may be specified in the header comment of these examples.</p>
 
 <p>Hook contributions and improvements are welcome.</p>
+
+<h3> Grapes</h3>
+
+<p><em>SINCE 1.0.0</em></p>
+
+<p><a href="http://groovy.codehaus.org/Grape">Grape</a> lets you quickly add maven repository dependencies to your Groovy hook script.</p>
+
+<blockquote>Grape (The Groovy Adaptable Packaging Engine or Groovy Advanced Packaging Engine) is the infrastructure enabling the grab() calls in Groovy, a set of classes leveraging <a href="http://ant.apache.org/ivy">Ivy</a> to allow for a repository driven module system for Groovy. This allows a developer to write a script with an essentially arbitrary library requirement, and ship just the script. Grape will, at runtime, download as needed and link the named libraries and all dependencies forming a transitive closure when the script is run from existing repositories such as Ibiblio, Codehaus, and java.net.</blockquote>
+<p><pre class='prettyprint lang-java'>
+// create and use a primitive array
+import org.apache.commons.collections.primitives.ArrayIntList
+
+@Grab(group='commons-primitives', module='commons-primitives', version='1.0')
+def createEmptyInts() { new ArrayIntList() }
+
+def ints = createEmptyInts()
+ints.add(0, 42)
+assert ints.size() == 1
+assert ints.get(0) == 42
+</pre></p>
+
+<h3> Custom Fields</h3>
+
+<p><em>SINCE 1.0.0</em></p>
+
+<p>Gitblit allows custom repository string fields to be defined in <code>gitblit.properties</code> or <code>web.xml</code>.  Entry textfields are automatically created for these fields in the Edit Repository page of Gitblit and the Edit Repository dialog of the Gitblit Manager.  These fields are accessible from your Groovy hook scripts as</p>
+
+<pre><code>repository.customFields.myField
+</code></pre>
+
+<p>This feature allows you to customize the behavior of your hook scripts without hard-coding values in the hook scripts themselves.</p>
 
 <h3> Pre-Receive</h3>
 
@@ -585,7 +690,7 @@ My testing indicates that your username must be embedded in the url.  YMMV.<br/>
 <pre>https://username@yourserver/git/your/repository</pre></li>
 </ul>		</div> <!-- markdown -->
 		<footer>
-			<p class="pull-right">generated 2012-04-11</p>
+			<p class="pull-right">generated 2012-07-14</p>
 		The content of this page is licensed under the <a href="http://creativecommons.org/licenses/by/3.0">Creative Commons Attribution 3.0 License</a>.
 		</footer>			
 	</div> <!-- container -->	
