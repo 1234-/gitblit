@@ -65,7 +65,7 @@
 <h2> Gitblit WAR Setup</h2>
 
 <ol>
-<li>Download <a href="http://code.google.com/p/gitblit/downloads/detail?name=gitblit-1.0.0.war">Gitblit WAR 1.0.0</a> to the webapps folder of your servlet container.</li>
+<li>Download <a href="http://code.google.com/p/gitblit/downloads/detail?name=gitblit-1.1.0.war">Gitblit WAR 1.1.0</a> to the webapps folder of your servlet container.</li>
 <li>You may have to manually extract the WAR (zip file) to a folder within your webapps folder.</li>
 <li>Copy the <code>WEB-INF/users.conf</code> file to a location outside the webapps folder that is accessible by your servlet container.<br/>
 Optionally copy the example hook scripts in <code>WEB-INF/groovy</code> to a location outside the webapps folder that is accesible by your servlet container.</li>
@@ -88,7 +88,7 @@ Open <code>web.xml</code> in your favorite text editor and make sure to review a
 <h2> Gitblit GO Setup</h2>
 
 <ol>
-<li>Download and unzip <a href="http://code.google.com/p/gitblit/downloads/detail?name=gitblit-1.0.0.zip">Gitblit GO 1.0.0</a>.<br/>
+<li>Download and unzip <a href="http://code.google.com/p/gitblit/downloads/detail?name=gitblit-1.1.0.zip">Gitblit GO 1.1.0</a>.<br/>
 <em>Its best to eliminate spaces in the path name.</em> </li>
 <li>The server itself is configured through a simple text file.<br/>
 Open <code>gitblit.properties</code> in your favorite text editor and make sure to review and set:<ul>
@@ -242,6 +242,10 @@ ProxyPreserveHost On
 
 # If your httpd frontend is https but you are proxying http Gitblit WAR or GO
 #Header edit Location &#94;http://([&#94;&#8260;]+)/gitblit/ https://&#36;1/gitblit/
+
+# Additionally you will want to tell Gitblit the original scheme and port
+#RequestHeader set X-Forwarded-Proto https
+#RequestHeader set X-Forwarded-Port 443
 
 #ProxyPass /gitblit ajp://localhost:8009/gitblit
 </pre><br/>
@@ -690,7 +694,7 @@ My testing indicates that your username must be embedded in the url.  YMMV.<br/>
 <pre>https://username@yourserver/git/your/repository</pre></li>
 </ul>		</div> <!-- markdown -->
 		<footer>
-			<p class="pull-right">generated 2012-07-14</p>
+			<p class="pull-right">generated 2012-08-25</p>
 		The content of this page is licensed under the <a href="http://creativecommons.org/licenses/by/3.0">Creative Commons Attribution 3.0 License</a>.
 		</footer>			
 	</div> <!-- container -->	

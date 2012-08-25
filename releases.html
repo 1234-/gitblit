@@ -64,14 +64,81 @@
 			<div class="markdown">
 <h2> Release History</h2>
 
+<div class="alert alert-error">
+<h4>Update Note</h4>
+If you are updating from an earlier release AND you have indexed branches with the Lucene indexing feature, you need to be aware that this release will completely re-index your repositories.  Please be sure to provide ample heap resources as appropriate for your installation.
+</div>
 <h3> Current Release</h3>
 
-<p><strong>1.0.0</strong> (<a href="http://code.google.com/p/gitblit/downloads/detail?name=gitblit-1.0.0.zip">go</a> | <a href="http://code.google.com/p/gitblit/downloads/detail?name=gitblit-1.0.0.war">war</a> | <a href="http://code.google.com/p/gitblit/downloads/detail?name=express-1.0.0.zip">express</a> | <a href="http://code.google.com/p/gitblit/downloads/detail?name=fedclient-1.0.0.zip">fedclient</a> | <a href="http://code.google.com/p/gitblit/downloads/detail?name=manager-1.0.0.zip">manager</a> | <a href="http://code.google.com/p/gitblit/downloads/detail?name=gbapi-1.0.0.zip">api</a>) based on <a href="http://eclipse.org/jgit" title="Eclipse JGit Site">JGit 2.0.0 (201206130900-r)</a> &nbsp; <em>released 2012-07-14</em></p>
+<p><strong>1.1.0</strong> (<a href="http://code.google.com/p/gitblit/downloads/detail?name=gitblit-1.1.0.zip">go</a> | <a href="http://code.google.com/p/gitblit/downloads/detail?name=gitblit-1.1.0.war">war</a> | <a href="http://code.google.com/p/gitblit/downloads/detail?name=express-1.1.0.zip">express</a> | <a href="http://code.google.com/p/gitblit/downloads/detail?name=fedclient-1.1.0.zip">fedclient</a> | <a href="http://code.google.com/p/gitblit/downloads/detail?name=manager-1.1.0.zip">manager</a> | <a href="http://code.google.com/p/gitblit/downloads/detail?name=gbapi-1.1.0.zip">api</a>) based on <a href="http://eclipse.org/jgit" title="Eclipse JGit Site">JGit 2.0.0 (201206130900-r)</a> &nbsp; <em>released 2012-08-25</em></p>
 
-<div class="alert alert-info">
-<h4>Update Note</h4>
-If you are updating from an 0.9.x release AND you have indexed branches with the Lucene indexing feature, you need to be aware that this release will completely re-index your repositories.  Please be sure to provide ample heap resources as appropriate for your installation.  See details below. 
-</div>
+<h4> fixes</h4>
+
+<ul>
+<li>Bypass Wicket's inability to handle direct url addressing of a view-restricted, grouped repository for new, unauthenticated sessions (e.g. click link from email or rss feed without having an active Wicket session)</li>
+<li>Fixed MailExecutor's failure to cope with mail server connection troubles resulting in 100% CPU usage</li>
+<li>Fixed generated urls in Groovy <em>sendmail</em> hook script for grouped repositories</li>
+<li>Fixed generated urls in RSS feeds for grouped repositories</li>
+<li>Fixed nullpointer exception in git servlet security filter (<a href='http://code.google.com/p/gitblit/issues/detail?id=123'>issue 123</a>)</li>
+<li>Eliminated an unnecessary repository enumeration call on the root page which should result in faster page loads (<a href='http://code.google.com/p/gitblit/issues/detail?id=103'>issue 103</a>) </li>
+<li>Gitblit could not delete a Lucene index in a working copy on index upgrade </li>
+<li>Do not index submodule links (<a href='http://code.google.com/p/gitblit/issues/detail?id=119'>issue 119</a>)</li>
+<li>Restore original user or team object on failure to update (<a href='http://code.google.com/p/gitblit/issues/detail?id=118'>issue 118</a>)</li>
+<li>Fixes to relative path determination in repository search algorithm for symlinks (<a href='http://code.google.com/p/gitblit/issues/detail?id=116'>issue 116</a>)</li>
+<li>Fix to GitServlet to allow pushing to symlinked repositories (<a href='http://code.google.com/p/gitblit/issues/detail?id=116'>issue 116</a>)</li>
+<li>Repository URL now uses <code>X-Forwarded-Proto</code> and <code>X-Forwarded-Port</code>, if available, for reverse proxy configurations (<a href='http://code.google.com/p/gitblit/issues/detail?id=115'>issue 115</a>)</li>
+<li>Output real RAW content, not simulated RAW content (<a href='http://code.google.com/p/gitblit/issues/detail?id=114'>issue 114</a>)</li>
+<li>Fixed Lucene charset encoding bug when reindexing a repository (<a href='http://code.google.com/p/gitblit/issues/detail?id=112'>issue 112</a>)</li>
+<li>Fixed search box linking to Lucene page for grouped repository on Tomcat (<a href='http://code.google.com/p/gitblit/issues/detail?id=111'>issue 111</a>)</li>
+<li>Fixed null pointer in LdapUserSerivce if account has a null email address (<a href='http://code.google.com/p/gitblit/issues/detail?id=110'>issue 110</a>)</li>
+<li>Really fixed failure to update a GO setting from the manager (<a href='http://code.google.com/p/gitblit/issues/detail?id=85'>issue 85</a>)</li>
+</ul>
+
+<h4> additions</h4>
+
+<ul>
+<li>Identified repository list is now cached by default to reduce disk io and to improve performance (<a href='http://code.google.com/p/gitblit/issues/detail?id=103'>issue 103</a>)<br/>
+<strong>New:</strong> <em>git.cacheRepositoryList=true</em></li>
+<li>Preliminary bare repository submodule support<br/>
+<strong>New:</strong> <em>git.submoduleUrlPatterns=</em><ul>
+<li><em>git.submoduleUrlPatterns</em> is a space-delimited list of regular expressions for extracting a repository name from a submodule url.<br/>
+For example, <code>git.submoduleUrlPatterns = .*?://github.com/(.*)</code> would extract <em>gitblit/gitblit.git</em> from <em>git://github.git/gitblit/gitblit.git</em><br/>
+<strong>Note:</strong> You may not need this control to work with submodules, but it is there if you do.</li>
+<li>If there are no matches from <em>git.submoduleUrlPatterns</em> then the repository name is assumed to be whatever comes after the last <code>/</code> character <em>(e.g. gitblit.git)</em></li>
+<li>Gitblit will try to locate this repository relative to the current repository <em>(e.g. myfolder/myrepo.git, myfolder/mysubmodule.git)</em> and then at the root level <em>(mysubmodule.git)</em> if that fails.</li>
+<li>Submodule references in a working copy will be properly identified as gitlinks, but Gitblit will not traverse into the working copy submodule repository.</li>
+</ul>
+</li>
+<li>Added a repository setting to control authorization as AUTHENTICATED or NAMED. (<a href='http://code.google.com/p/gitblit/issues/detail?id=117'>issue 117</a>)<br/>
+NAMED is the original behavior for authorizing against a list of permitted users or permitted teams.<br/>
+AUTHENTICATED allows restricted access for any authenticated user.  This is a looser authorization control.</li>
+<li>Added default authorization control setting (AUTHENTICATED or NAMED)<br/>
+<strong>New:</strong> <em>git.defaultAuthorizationControl=NAMED</em></li>
+<li>Added setting to control how deep Gitblit will recurse into <em>git.repositoriesFolder</em> looking for repositories (<a href='http://code.google.com/p/gitblit/issues/detail?id=103'>issue 103</a>)<br/>
+<strong>New:</strong> <em>git.searchRecursionDepth=-1</em></li>
+<li>Added setting to specify regex exclusions for repositories (<a href='http://code.google.com/p/gitblit/issues/detail?id=103'>issue 103</a>)<br/>
+<strong>New:</strong> <em>git.searchExclusions=</em></li>
+<li>Blob page now supports displaying images (<a href='http://code.google.com/p/gitblit/issues/detail?id=6'>issue 6</a>)</li>
+<li>Non-image binary files can now be downloaded using the RAW link</li>
+<li>Support StartTLS in LdapUserService (Steffen Gebert, <a href='http://code.google.com/p/gitblit/issues/detail?id=122'>issue 122</a>)</li>
+<li>Added Korean translation</li>
+</ul>
+
+<h4> changes</h4>
+
+<ul>
+<li>Line breaks inserted for readability in raw Markdown content display in the event of a parsing/transformation error.  An error message is now displayed prepended to the raw content.</li>
+<li>Improve UTF-8 reading for Markdown files</li>
+<li>Updated Polish translation</li>
+<li>Updated Japanese translation</li>
+<li>Updated Spanish translation</li>
+</ul>
+
+<hr/>
+<h3> Older Releases</h3>
+
+<p><strong>1.0.0</strong> <em>released 2012-07-14</em></p>
+
 <h4> fixes</h4>
 
 <ul>
@@ -140,8 +207,6 @@ Custom repository properties complement hook scripts by providing text field pro
 </ul>
 
 <hr/>
-<h3> Older Releases</h3>
-
 <p><strong>0.9.3</strong> <em>released 2012-04-11</em></p>
 
 <h4> fixes</h4>
@@ -425,7 +490,7 @@ This change helps adoption of GO in environments without an internet connection 
 <li>initial release</li>
 </ul>		</div> <!-- markdown -->
 		<footer>
-			<p class="pull-right">generated 2012-07-14</p>
+			<p class="pull-right">generated 2012-08-25</p>
 		The content of this page is licensed under the <a href="http://creativecommons.org/licenses/by/3.0">Creative Commons Attribution 3.0 License</a>.
 		</footer>			
 	</div> <!-- container -->	
